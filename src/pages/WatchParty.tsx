@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -58,7 +57,7 @@ const WatchParty = () => {
   const handleMemberAction = (memberId: number, action: 'accept' | 'decline') => {
     const member = pendingMembers.find(m => m.id === memberId);
     if (member && action === 'accept') {
-      setMembers([...members, { ...member, status: 'accepted' }]);
+      setMembers([...members, { ...member, status: 'accepted', isLeader: false }]);
     }
     setPendingMembers(pendingMembers.filter(m => m.id !== memberId));
   };
