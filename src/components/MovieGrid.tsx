@@ -16,48 +16,44 @@ const MovieGrid = () => {
     { title: "Fantasy World", imageUrl: "https://images.unsplash.com/photo-1500856056008-859079534e9e?w=400&h=600&fit=crop" }
   ];
 
-  // Create diagonal rows with duplicated content for seamless scrolling
-  const createDiagonalRow = (startIndex: number, direction: 1 | 2) => {
-    const rowMovies = [];
-    for (let i = 0; i < 15; i++) {
-      rowMovies.push(movies[(startIndex + i) % movies.length]);
+  // Create columns with duplicated content for seamless scrolling
+  const createColumn = (startIndex: number, direction: 'up' | 'down') => {
+    const columnMovies = [];
+    for (let i = 0; i < 12; i++) {
+      columnMovies.push(movies[(startIndex + i) % movies.length]);
     }
     // Duplicate for seamless scrolling
-    return [...rowMovies, ...rowMovies];
+    return [...columnMovies, ...columnMovies];
   };
 
-  const diagonalRows = [
-    { movies: createDiagonalRow(0, 1), direction: 1 as const },
-    { movies: createDiagonalRow(2, 2), direction: 2 as const },
-    { movies: createDiagonalRow(4, 1), direction: 1 as const },
-    { movies: createDiagonalRow(6, 2), direction: 2 as const },
-    { movies: createDiagonalRow(8, 1), direction: 1 as const },
-    { movies: createDiagonalRow(1, 2), direction: 2 as const },
-    { movies: createDiagonalRow(3, 1), direction: 1 as const },
-    { movies: createDiagonalRow(5, 2), direction: 2 as const }
+  const columns = [
+    { movies: createColumn(0, 'up'), direction: 'up' as const },
+    { movies: createColumn(2, 'down'), direction: 'down' as const },
+    { movies: createColumn(4, 'up'), direction: 'up' as const },
+    { movies: createColumn(6, 'down'), direction: 'down' as const },
+    { movies: createColumn(8, 'up'), direction: 'up' as const },
+    { movies: createColumn(1, 'down'), direction: 'down' as const },
+    { movies: createColumn(3, 'up'), direction: 'up' as const }
   ];
 
   return (
     <div className="fixed inset-0 overflow-hidden">
       <div className="absolute inset-0 bg-black/60 z-10" />
-      <div className="absolute inset-0">
-        {diagonalRows.map((row, rowIndex) => (
+      <div className="flex gap-4 justify-center items-start h-full -translate-x-24">
+        {columns.map((column, columnIndex) => (
           <div
-            key={rowIndex}
-            className={`absolute flex gap-6 ${
-              row.direction === 1 ? 'animate-scroll-diagonal-1' : 'animate-scroll-diagonal-2'
+            key={columnIndex}
+            className={`flex flex-col ${
+              column.direction === 'up' ? 'animate-scroll-up' : 'animate-scroll-down'
             }`}
             style={{
-              animationDelay: `${rowIndex * 2}s`,
-              animationDuration: `${40 + rowIndex * 5}s`,
-              top: `${rowIndex * 15}%`,
-              left: `${rowIndex * -10}%`,
-              transform: 'rotate(-15deg)'
+              animationDelay: `${columnIndex * 0.5}s`,
+              animationDuration: `${20 + columnIndex * 2}s`
             }}
           >
-            {row.movies.map((movie, movieIndex) => (
+            {column.movies.map((movie, movieIndex) => (
               <MoviePoster
-                key={`${rowIndex}-${movieIndex}`}
+                key={`${columnIndex}-${movieIndex}`}
                 title={movie.title}
                 imageUrl={movie.imageUrl}
               />
