@@ -131,10 +131,10 @@ const Home = () => {
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div className="text-sm text-gray-400">
-            Wednesday, August 30 | 10:32 PM
+            Friday, June 6, 3:30pm
           </div>
-          <Button variant="outline" className="border-gray-600 text-white hover:bg-gray-700">
-            Reorder List
+          <Button variant="outline" className=" border-gray-600 text-black hover:bg-gray-700">
+            Surprise Me
           </Button>
         </div>
 
