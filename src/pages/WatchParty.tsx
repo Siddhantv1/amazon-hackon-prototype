@@ -63,7 +63,7 @@ const WatchParty = () => {
   };
 
   const startWatching = () => {
-    navigate('/home');
+    navigate('/home?watchParty=true');
   };
 
   if (view === 'select') {

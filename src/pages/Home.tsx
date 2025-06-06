@@ -1,11 +1,47 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Search, Settings, Home as HomeIcon, Tv, Bookmark, Plus, Users } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import AudioInput from "@/components/AudioInput";
 
 const Home = () => {
   const navigate = useNavigate();
+  const [audioInputVisible, setAudioInputVisible] = useState(false);
+  const [inWatchParty, setInWatchParty] = useState(false);
+  const [partyMembers, setPartyMembers] = useState(3); // Example number of members
+  
+  // Effect for handling key press events
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'm') {
+        setAudioInputVisible(true);
+      }
+    };
+    
+    const handleKeyUp = (e: KeyboardEvent) => {
+      if (e.key === 'm') {
+        setAudioInputVisible(false);
+      }
+    };
+    
+    window.addEventListener('keydown', handleKeyDown);
+    window.addEventListener('keyup', handleKeyUp);
+    
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('keyup', handleKeyUp);
+    };
+  }, []);
+
+  // Check URL parameters for watchParty information when the component mounts
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const watchParty = urlParams.get('watchParty');
+    if (watchParty === 'true') {
+      setInWatchParty(true);
+    }
+  }, []);
 
   const apps = [
     { name: 'Netflix', color: 'bg-red-600', textColor: 'text-white' },
@@ -17,20 +53,28 @@ const Home = () => {
     { name: 'ESPN', color: 'bg-red-700', textColor: 'text-white' },
     { name: 'Philo', color: 'bg-white', textColor: 'text-blue-600' },
     { name: 'FuboTV', color: 'bg-orange-600', textColor: 'text-white' },
-    { name: 'Prime Video', color: 'bg-cyan-400', textColor: 'text-black' },
+    { name: 'Prime Video', color: 'bg-[#FF9900]', textColor: 'text-black' },
     { name: 'YouTube TV', color: 'bg-white', textColor: 'text-red-600' }
   ];
 
   return (
     <div className="min-h-screen bg-gray-900 text-white">
+      {/* Audio Input Component */}
+      <AudioInput visible={audioInputVisible} />
+      
       {/* Sidebar */}
       <div className="fixed left-0 top-0 h-full w-64 bg-gray-800 p-4">
         <div className="mb-8">
           <div className="flex items-center space-x-2 text-white">
-            <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center">
+            <div className="w-8 h-8 bg-[#146EB4] rounded-full flex items-center justify-center">
               <span className="text-white font-bold text-sm">JM</span>
             </div>
-            <span className="font-medium">James M.</span>
+            <span className="font-medium">
+              {inWatchParty 
+                ? `James M. & ${partyMembers} others`
+                : "James M."
+              }
+            </span>
           </div>
         </div>
 
@@ -96,10 +140,10 @@ const Home = () => {
 
         {/* Featured Content */}
         <div className="mb-8">
-          <div className="relative h-64 bg-gradient-to-r from-gray-800 to-gray-600 rounded-lg overflow-hidden mb-4">
+          <div className="relative h-64 bg-gradient-to-r from-[#000000] to-[#146EB4] rounded-lg overflow-hidden mb-4">
             <div className="absolute inset-0 flex items-center justify-center">
               <div className="text-center">
-                <h1 className="text-4xl font-bold tracking-wider mb-2">
+                <h1 className="text-4xl font-bold tracking-wider mb-2 font-bebas">
                   THE PERIPHERAL
                 </h1>
                 <p className="text-lg">NEW EPISODES FRIDAYS | prime video</p>
