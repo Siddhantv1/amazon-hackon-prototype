@@ -14,7 +14,7 @@ const Hero = () => {
           <span className="text-[#FF9900]">Entertainment</span>
         </h1>
         <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto">
-          Watch thousands of movies and TV shows. Cancel anytime. No commitments.
+          Watch thousands of movies and TV shows. Cancel anytime.
         </p>
         <div className="flex justify-center">
           <Button 
@@ -26,7 +26,7 @@ const Hero = () => {
           </Button>
         </div>
         <div className="mt-8 text-gray-400">
-          <p>Try free for 30 days. No credit card required.</p>
+          <p>Try free for 3 months. No credit card required.</p>
         </div>
       </div>
     </div>

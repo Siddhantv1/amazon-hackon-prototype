@@ -13,15 +13,12 @@ const Header = () => {
             <a href="#" className="text-white hover:text-[#FF9900] transition-colors">Home</a>
             <a href="#" className="text-white hover:text-[#FF9900] transition-colors">Movies</a>
             <a href="#" className="text-white hover:text-[#FF9900] transition-colors">TV Shows</a>
-            <a href="#" className="text-white hover:text-[#FF9900] transition-colors">My List</a>
+            <a href="#" className="text-white hover:text-[#FF9900] transition-colors">Live TV</a>
           </div>
         </div>
         <div className="flex items-center space-x-4">
-          <Button variant="ghost" className="text-white hover:bg-white/10">
+          <Button variant="ghost" className="text-white hover:text-white hover:bg-white/10">
             Sign In
-          </Button>
-          <Button className="bg-[#FF9900] hover:bg-[#FF9900]/80 text-black">
-            Start Free Trial
           </Button>
         </div>
       </nav>
