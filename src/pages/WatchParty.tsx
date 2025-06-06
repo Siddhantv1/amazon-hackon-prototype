@@ -16,7 +16,7 @@ const WatchParty = () => {
   const [isLeader, setIsLeader] = useState(false);
   const [copied, setCopied] = useState(false);
   const [members, setMembers] = useState([
-    { id: 1, name: 'James M. (You)', status: 'accepted', isLeader: true },
+    { id: 1, name: 'Siddhant O. (You)', status: 'accepted', isLeader: true },
   ]);
   const [pendingMembers, setPendingMembers] = useState([
     { id: 2, name: 'Alice Johnson', status: 'pending' },
@@ -74,7 +74,7 @@ const WatchParty = () => {
             <Button 
               variant="ghost" 
               onClick={() => navigate('/home')}
-              className="absolute top-4 left-4 text-white hover:bg-gray-800"
+              className="absolute top-4 left-4 text-white hover:bg-gray-800 hover:text-white"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back to Home
@@ -87,7 +87,7 @@ const WatchParty = () => {
           </div>
 
           <div className="grid md:grid-cols-2 gap-6">
-            <Card className="bg-gray-900 border-gray-800 hover:border-red-500 transition-colors cursor-pointer" onClick={() => setView('create')}>
+            <Card className="bg-gray-900 border-gray-800 hover:border-yellow-500 transition-colors cursor-pointer" onClick={() => setView('create')}>
               <CardHeader className="text-center">
                 <div className="mx-auto w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mb-4">
                   <Users className="w-8 h-8 text-white" />
@@ -157,13 +157,13 @@ const WatchParty = () => {
               <Button 
                 onClick={() => setView('select')}
                 variant="outline"
-                className="flex-1 border-gray-600 text-white hover:bg-gray-700"
+                className="flex-1 border-gray-600 text-black hover:bg-gray-700"
               >
                 Back
               </Button>
               <Button 
                 onClick={handleCreateParty}
-                className="flex-1 bg-red-600 hover:bg-red-700"
+                className="flex-1 bg-teal-600 hover:bg-teal-700"
               >
                 Create Party
               </Button>
@@ -200,7 +200,7 @@ const WatchParty = () => {
               <Button 
                 onClick={() => setView('select')}
                 variant="outline"
-                className="flex-1 border-gray-600 text-white hover:bg-gray-700"
+                className="flex-1 border-gray-600 text-black hover:bg-gray-700"
               >
                 Back
               </Button>
@@ -226,7 +226,7 @@ const WatchParty = () => {
             <Button 
               variant="ghost" 
               onClick={() => setView('select')}
-              className="text-white hover:bg-gray-800"
+              className="text-white hover:bg-gray-800 hover:text-white"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Leave Party
@@ -255,7 +255,7 @@ const WatchParty = () => {
                 size="sm"
                 variant="outline"
                 onClick={copyCode}
-                className="border-gray-600 text-white hover:bg-gray-700"
+                className="border-gray-600 text-black hover:bg-gray-700"
               >
                 {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               </Button>
@@ -302,7 +302,7 @@ const WatchParty = () => {
                 {isLeader && (
                   <Button 
                     onClick={startWatching}
-                    className="w-full bg-red-600 hover:bg-red-700"
+                    className="w-full bg-cyan-600 text-black hover:bg-cyan-700"
                     size="lg"
                   >
                     <Play className="w-5 h-5 mr-2" />
