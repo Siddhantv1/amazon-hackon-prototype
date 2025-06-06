@@ -52,7 +52,7 @@ const Signup = () => {
       <Card className="w-full max-w-md bg-gray-900 border-gray-800">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-white">
-            <span className="text-red-500">Stream</span>Flix
+            <span className="text-amazon-orange">Amazon</span> Lounge
           </CardTitle>
           <CardDescription className="text-gray-400">
             {showMFA ? 'Verify your email' : 'Create your account'}
@@ -102,7 +102,7 @@ const Signup = () => {
             <CardFooter className="flex flex-col space-y-4">
               <Button 
                 type="submit" 
-                className="w-full bg-red-600 hover:bg-red-700"
+                className="w-full bg-amazon-orange hover:bg-amazon-orange/80 text-black"
                 disabled={isLoading}
               >
                 {isLoading ? 'Creating Account...' : 'Sign Up'}
@@ -112,7 +112,7 @@ const Signup = () => {
                 <button 
                   type="button"
                   onClick={() => navigate('/login')}
-                  className="text-red-500 hover:underline"
+                  className="text-amazon-orange hover:underline"
                 >
                   Sign in
                 </button>
@@ -147,7 +147,7 @@ const Signup = () => {
             <CardFooter className="flex flex-col space-y-4">
               <Button 
                 type="submit" 
-                className="w-full bg-red-600 hover:bg-red-700"
+                className="w-full bg-amazon-orange hover:bg-amazon-orange/80 text-black"
                 disabled={isLoading || mfaCode.length !== 6}
               >
                 {isLoading ? 'Verifying...' : 'Verify & Create Account'}

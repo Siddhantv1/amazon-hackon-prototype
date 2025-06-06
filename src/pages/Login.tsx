@@ -46,7 +46,7 @@ const Login = () => {
       <Card className="w-full max-w-md bg-gray-900 border-gray-800">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-white">
-            <span className="text-red-500">Stream</span>Flix
+            <span className="text-amazon-orange">Amazon</span> Lounge
           </CardTitle>
           <CardDescription className="text-gray-400">
             {showMFA ? 'Enter verification code' : 'Sign in to your account'}
@@ -84,7 +84,7 @@ const Login = () => {
             <CardFooter className="flex flex-col space-y-4">
               <Button 
                 type="submit" 
-                className="w-full bg-red-600 hover:bg-red-700"
+                className="w-full bg-amazon-orange hover:bg-amazon-orange/80 text-black"
                 disabled={isLoading}
               >
                 {isLoading ? 'Signing In...' : 'Sign In'}
@@ -94,7 +94,7 @@ const Login = () => {
                 <button 
                   type="button"
                   onClick={() => navigate('/signup')}
-                  className="text-red-500 hover:underline"
+                  className="text-amazon-orange hover:underline"
                 >
                   Sign up
                 </button>
@@ -129,7 +129,7 @@ const Login = () => {
             <CardFooter className="flex flex-col space-y-4">
               <Button 
                 type="submit" 
-                className="w-full bg-red-600 hover:bg-red-700"
+                className="w-full bg-amazon-orange hover:bg-amazon-orange/80 text-black"
                 disabled={isLoading || mfaCode.length !== 6}
               >
                 {isLoading ? 'Verifying...' : 'Verify Code'}
