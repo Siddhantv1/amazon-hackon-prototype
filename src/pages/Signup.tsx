@@ -52,7 +52,8 @@ const Signup = () => {
       <Card className="w-full max-w-md bg-gray-900 border-gray-800">
         <CardHeader className="text-center">
           <CardTitle className="text-2xl text-white">
-            <span className="text-amazon-orange">Amazon</span> Lounge
+            <span className="text-white">amazon</span>
+            <span className="text-[#FF9900] ml-1">firetv</span>
           </CardTitle>
           <CardDescription className="text-gray-400">
             {showMFA ? 'Verify your email' : 'Create your account'}

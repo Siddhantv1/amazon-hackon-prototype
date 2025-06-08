@@ -11,6 +11,12 @@ const Index = () => {
         {/* Animated movie poster background - ONLY for screen 1 */}
         <MovieGrid />
         
+        {/* Animated overlay that transitions from transparent to dark */}
+        <div className="fixed inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60 z-15 transition-all duration-1000 ease-in-out opacity-0 animate-fade-in-slow" style={{
+          animationDelay: '2s',
+          animationFillMode: 'forwards'
+        }} />
+        
         {/* Main content */}
         <div className="relative z-20">
           <Header />
@@ -19,104 +25,52 @@ const Index = () => {
       </div>
 
       {/* Screen 2 - TV that gets you */}
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 flex items-center justify-center px-6 transition-all duration-1000 ease-in-out">
+      <div className="min-h-screen bg-slate-800 flex items-center justify-center px-6 transition-all duration-1000 ease-in-out">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-left">
-            <h2 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
               TV that gets you
             </h2>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-lg">
-              By serving up the best recommendations from all your apps in one place, Fire TV makes it easier than ever to find what to watch.
+            <p class="text-lg text-gray-300 leading-relaxed">
+              By serving up the best recommendations from all your apps in one place,
+              Fire TV makes it easier than ever to find what to watch.
             </p>
           </div>
           <div className="relative">
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-4">
-                <div className="bg-gradient-to-br from-orange-600 to-red-700 rounded-lg p-4 h-32 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                  <span className="text-white font-bold text-lg">UNTIL DAWN</span>
-                </div>
-                <div className="bg-gradient-to-br from-red-800 to-red-900 rounded-lg p-4 h-24 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                  <span className="text-white font-bold">SINNERS</span>
-                </div>
-              </div>
-              <div className="space-y-4 mt-8">
-                <div className="bg-gradient-to-br from-blue-700 to-blue-900 rounded-lg p-4 h-24 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                  <span className="text-white font-bold text-sm">MINECRAFT</span>
-                </div>
-                <div className="bg-gradient-to-br from-gray-700 to-gray-900 rounded-lg p-4 h-32 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                  <span className="text-white font-bold">JUDGEMENT</span>
-                </div>
-              </div>
-            </div>
+            <img 
+              alt="TV recommendations grid" 
+              className="rounded-lg shadow-xl w-full" 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuARyd9zLp3WU2Chq8QkcmuM0_8E0UMJQH7L_k_hh3ye4j6uWKtkhoPTmlLUwaf_Pe_hQeg6WVR90-ySdUeBIXzTwAiWyJATT5CIZSlFsUuG1stdOugKOQLZbP_6JpjI1W-rUMWdOB_Fxjd8qbgEW2gPerFCqeClMOIDbbboa2nv3-3R_MRicBNlSCUjOAKORY_GOmMUVY_ctqVy7pP0qM9G-MEA5I2mVMUzeY5Rf7xLvfULz99gU3NVZ6wnCLLE-Mrjftd91VweYk4"
+            />
           </div>
         </div>
       </div>
 
       {/* Screen 3 - Stream your heart out */}
-      <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-black flex items-center justify-center px-6 transition-all duration-1000 ease-in-out">
+      <div className="min-h-screen bg-slate-900 flex items-center justify-center px-6 transition-all duration-1000 ease-in-out">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="relative order-2 lg:order-1">
-            <div className="grid grid-cols-3 gap-4">
-              {/* Row 1 */}
-              <div className="bg-[#146EB4] rounded-lg p-3 h-20 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">prime video</span>
-              </div>
-              <div className="bg-orange-600 rounded-lg p-3 h-20 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">REACHER</span>
-              </div>
-              <div className="bg-black rounded-lg p-3 h-20 flex items-center justify-center border border-gray-600 transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">tv+</span>
-              </div>
-              
-              {/* Row 2 */}
-              <div className="bg-blue-600 rounded-lg p-3 h-20 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">MOANA 2</span>
-              </div>
-              <div className="bg-red-600 rounded-lg p-3 h-20 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">YouTube</span>
-              </div>
-              <div className="bg-teal-600 rounded-lg p-3 h-20 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">Severance</span>
-              </div>
-              
-              {/* Row 3 */}
-              <div className="bg-blue-800 rounded-lg p-3 h-20 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">Disney+</span>
-              </div>
-              <div className="bg-gray-700 rounded-lg p-3 h-20 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">ECHO RIVER</span>
-              </div>
-              <div className="bg-blue-900 rounded-lg p-3 h-20 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">peacock</span>
-              </div>
-              
-              {/* Row 4 */}
-              <div className="bg-teal-700 rounded-lg p-3 h-20 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">Hacks</span>
-              </div>
-              <div className="bg-purple-800 rounded-lg p-3 h-20 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">max</span>
-              </div>
-              <div className="bg-gray-600 rounded-lg p-3 h-20 flex items-center justify-center transform hover:scale-105 transition-transform duration-300">
-                <span className="text-white font-bold text-sm">1923</span>
-              </div>
-            </div>
+            <img 
+              alt="Streaming services logos" 
+              className="rounded-lg shadow-xl w-full" 
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXU38PtgYhXWxfTjFnQ9eU_0jZsjwC4U6H0cxNMEyLnAuyWALlDM1QcfuMaUMs_VMQgZ8cuHUfYpNHX-zZP8_-yKbaFLevwLBxzEgVveG6EV5WDpzOlI9qMA7sEJZb9aKSYikYe7Epn8k9nMDCoRr9Oakn1MjBuW0yMoGtu9Ucly-VNdl8i0yTPysvRt2d2oOpj4RZLjIlerEn87Bry_OJgep_se2Lxt1XEUxK7eJr_NFBQ4OAv5Ggq8kBryF0h-TsbtFbkWdjpFY"
+            />
           </div>
           <div className="text-left order-1 lg:order-2">
-            <h2 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
               Stream your heart out
             </h2>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-lg">
-              Over 1.5 million movies and TV episodes, including favorites from Netflix, Prime Video, Disney+, Max, Apple TV+, Peacock, STARZ, Paramount+, and more.
+            <p class="text-lg text-gray-300 leading-relaxed">
+              Over 1.5 million movies and TV episodes. Watch favorites from Netflix, Prime Video, Disney+, Max, Apple TV+, Peacock, STARZ, Paramount+, and more.
             </p>
           </div>
         </div>
       </div>
 
       {/* Screen 4 - Maximize your Fire TV experience */}
-      <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-blue-900 flex flex-col items-center justify-center px-6 transition-all duration-1000 ease-in-out">
+      <div className="min-h-screen bg-slate-800 flex flex-col items-center justify-center px-6 transition-all duration-1000 ease-in-out">
         <div className="max-w-4xl mx-auto text-center mb-auto pt-20">
-          <h2 className="text-6xl md:text-7xl lg:text-8xl font-bold text-white mb-8 leading-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 leading-tight">
             Maximize your<br />
             Fire TV experience
           </h2>

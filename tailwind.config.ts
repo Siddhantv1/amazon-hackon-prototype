@@ -117,6 +117,10 @@ export default {
 					'0%': { opacity: '1', transform: 'scale(1)' },
 					'100%': { opacity: '0', transform: 'scale(0.95)' }
 				},
+				'fade-in-slow': {
+					'0%': { opacity: '0' },
+					'100%': { opacity: '1' }
+				},
 				'waveform': {
 					'0%, 100%': { height: '20%' },
 					'25%': { height: '80%' },
@@ -131,6 +135,7 @@ export default {
 				'scroll-down': 'scroll-down 20s linear infinite',
 				'fade-in': 'fade-in 0.3s ease-out',
 				'fade-out': 'fade-out 0.3s ease-out',
+				'fade-in-slow': 'fade-in-slow 3s ease-out',
 				'waveform-1': 'waveform 1.2s ease-in-out infinite',
 				'waveform-2': 'waveform 1.3s ease-in-out infinite 0.1s',
 				'waveform-3': 'waveform 1.5s ease-in-out infinite 0.2s',
