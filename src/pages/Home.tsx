@@ -96,8 +96,8 @@ const Home = () => {
             </div>
             <span className="font-medium">
               {inWatchParty 
-                ? `James M. & ${partyMembers} others`
-                : "James M."
+                ? `Siddhant O. & ${partyMembers} others`
+                : "Siddhant O."
               }
             </span>
           </div>
