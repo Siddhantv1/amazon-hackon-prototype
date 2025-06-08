@@ -173,7 +173,7 @@ const WatchParty = () => {
             Back to Home
           </Button>
           <h1 className="text-4xl font-bold mb-4">Join a Lounge</h1>
-          <p className="text-gray-400">Watch movies and shows together with friends</p>
+          <p className="text-gray-400">Watch movies and shows together and chat with friends</p>
         </div>
 
         <div className="bg-gray-800 rounded-lg p-6 mb-6">
@@ -198,8 +198,7 @@ const WatchParty = () => {
           <p className="text-gray-400 mb-4">Or</p>
           <Button
             onClick={generateRoomCode}
-            variant="outline"
-            className="w-full border-[#FF9900] text-[#FF9900] hover:bg-[#FF9900] hover:text-black"
+            className="w-full bg-[#FF9900] text-black hover:bg-[#FF9900] hover:text-white"
           >
             Create New Lounge
           </Button>
