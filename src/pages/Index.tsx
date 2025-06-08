@@ -2,10 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import MovieGrid from "@/components/MovieGrid";
-
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 const Index = () => {
   const [fadeOut, setFadeOut] = useState(false);
   const firstSectionRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const currentRef = firstSectionRef.current;
@@ -103,6 +105,12 @@ const Index = () => {
             Maximize your<br />
             Fire TV experience
           </h1>
+          <Button
+            onClick={() => navigate('/login')}
+            className="bg-[#FF9900] hover:bg-[#fdd835] text-black font-semibold px-6 py-3 text-lg mt-4"
+          >
+            Get Started
+          </Button>
         </div>
         <div className="w-full max-w-7xl mx-auto mt-auto pb-8">
           <div className="border border-gray-600 rounded-lg p-6 flex justify-between items-center bg-black/30 backdrop-blur-sm">
