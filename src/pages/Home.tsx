@@ -102,14 +102,10 @@ const Home = () => {
             </span>
           </div>
         </div>
-        
-        <div className="absolute inset-0 flex items-center justify-center z-20">
-          <div className="text-center">
-            <h1 className="text-6xl font-bold tracking-wider mb-4 font-['Bebas_Neue'] text-[#FF9900]">
-              OUTER RANGE
-            </h1>
-            <p className="text-xl mb-4">WATCH NOW | prime video</p>
-            <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded">
+        {/* recommended for today */}
+        <div className=" absolute inset-0 flex items-start z-20 bg-[url('/public/ok1.jpg')] bg-cover bg-center">
+          <div className="ml-6 mt-60">
+            <Button className="backdrop-filter backdrop-blur-sm bg-gray-900/30 hover:bg-white text-white hover:text-black px-6 py-2 rounded">
               Learn More
             </Button>
           </div>
