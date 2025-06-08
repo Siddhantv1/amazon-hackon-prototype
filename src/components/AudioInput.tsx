@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Mic } from "lucide-react";
 
@@ -17,15 +16,16 @@ const WaveformBar = ({ index }: { index: number }) => {
     <div
       className="w-1.5 bg-[#FF9900] rounded-full animate-waveform"
       style={{
-        // Using inline styles for dynamic/randomized values - cast to any to allow CSS custom properties
+        // Using inline styles for dynamic/randomized values
         '--start-height': `${20 + Math.random() * 30}%`,
         '--end-height': randomHeight,
         animationDuration: randomDuration,
         animationDelay: randomDelay,
-      } as React.CSSProperties & { [key: string]: string }}
+      }}
     ></div>
   );
 };
+
 
 const AudioInput: React.FC<AudioInputProps> = ({ visible }) => {
   return (
