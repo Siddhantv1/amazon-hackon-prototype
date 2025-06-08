@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Search, Home as HomeIcon, Tv, Bookmark, Settings, Grid3X3 } from "lucide-react";
+import { Search, Home as HomeIcon, Tv, Bookmark, Settings, Sofa } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AudioInput from "@/components/AudioInput";
 
@@ -47,8 +47,6 @@ const Home = () => {
     { name: 'Netflix', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Netflix-Logo.png', url: 'https://netflix.com', bgColor: 'bg-red-600' },
     { name: 'Prime Video', logo: 'https://m.media-amazon.com/images/G/01/digital/video/web/Logo-min.png', url: 'https://primevideo.com', bgColor: 'bg-[#146EB4]' },
     { name: 'YouTube', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg', url: 'https://youtube.com', bgColor: 'bg-red-600' },
-    { name: 'Disney+', logo: 'https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D7AEE1F05D10FC37C873176AAA26F777FC1B71E7A6563F36C6B1B497116C0454/scale?width=1200&aspectRatio=1.78&format=png', url: 'https://disneyplus.com', bgColor: 'bg-blue-800' },
-    { name: 'Hulu', logo: 'https://press.hulu.com/wp-content/uploads/2020/02/hulu-white-1.png', url: 'https://hulu.com', bgColor: 'bg-green-500' },
     { name: 'Zee5', logo: 'https://akamaividz2.zee5.com/image/upload/w_1013,h_405,c_scale,f_webp,q_auto:eco/resources/0-1-manual_65395a801a6a4b4a850b9094aebccf23/list/1170x4051668082074884zee5logoforweb.png', url: 'https://zee5.com', bgColor: 'bg-purple-600' },
     { name: 'JioHotstar', logo: 'https://img10.hotstar.com/image/upload/f_auto,q_90,w_256/v1661346101/web-images/logo-d-plus.svg', url: 'https://hotstar.com', bgColor: 'bg-yellow-500' },
     { name: 'Sony Liv', logo: 'https://images.ottplay.com/images/sony-liv-1662019009.png', url: 'https://sonyliv.com', bgColor: 'bg-blue-900' },
@@ -64,17 +62,17 @@ const Home = () => {
     { name: 'Search', icon: Search },
     { name: 'Live TV', icon: Tv },
     { name: 'Saved', icon: Bookmark },
-    { name: 'Lounge', icon: Grid3X3, onClick: () => navigate('/watch-party') },
+    { name: 'Lounge', icon: Sofa, onClick: () => navigate('/watch-party') },
     { name: 'Settings', icon: Settings }
   ];
 
   const recommendedMovies = [
-    { title: "The Wilds", image: "https://m.media-amazon.com/images/M/MV5BOWIwZGY0ODEtMTUzYS00ZmYwLWI4NzUtMDUwNjVjNGVhZjZiXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" },
-    { title: "Outlander", image: "https://m.media-amazon.com/images/M/MV5BMTQzNzk4NzA4NF5BMl5BanBnXkFtZTgwNzY4OTQyMTE@._V1_.jpg" },
-    { title: "Yellowjackets", image: "https://m.media-amazon.com/images/M/MV5BYjJmMWU3M2UtOGNjMS00ZDNmLWJiOWMtNjhkNTdkMjQ2NWEyXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" },
-    { title: "Baywatch", image: "https://m.media-amazon.com/images/M/MV5BMTEyOTU4MjI1M15BMl5BanBnXkFtZTgwMzg2NDEzNDE@._V1_.jpg" },
-    { title: "Reacher", image: "https://m.media-amazon.com/images/M/MV5BYWU4OGFjZGMtZDYzNC00NGZhLTllNWItZGI2M2E3N2YzNjJlXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" },
-    { title: "Bel Air", image: "https://m.media-amazon.com/images/M/MV5BNzAwNzUzNjY4NV5BMl5BanBnXkFtZTgwMzQ3NjM3ODE@._V1_.jpg" }
+    { title: "The Accountant 2", image: "https://assetscdn1.paytm.com/images/cinema/The-Accountant-2-118f8700-ede4-11ef-bc88-6d3374531046.jpg" },
+    { title: "The Dark Knight Rises", image: "https://i.pinimg.com/originals/e6/b4/2f/e6b42f7280b1522dfa7ba5344ade696b.jpg" },
+    { title: "Peaky Blinders", image: "https://miro.medium.com/v2/resize:fit:820/1*EsNbEC8u5QeWqMqa8Hk-Ew.png" },
+    { title: "Panchayat", image: "https://feeds.abplive.com/onecms/images/uploaded-images/2024/05/16/3cc6265c0949ec8d0792087bb48eb5fa1715847610947274_original.jpeg?impolicy=abp_cdn&imwidth=640" },
+    { title: "Reacher", image: "https://devdiscourse.blob.core.windows.net/devnews/10_08_2023_09_53_10_4031052.jpg" },
+    { title: "Criminal Justice", image: "https://i.ytimg.com/vi/98pKCUl4ljM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLD5SnLDeU-j0xix5PPDFpXV_DcWyg" }
   ];
 
   return (
@@ -121,28 +119,34 @@ const Home = () => {
       </div>
 
       {/* Horizontal Navigation Bar */}
-      <div className="bg-gray-800 px-6 py-4">
+      {/* Nav Bar */}
+      <nav className="bg-gray-800 px-6 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-8">
-            {navItems.map((item, index) => (
+          <div className="flex space-x-4 relative">
+            {navItems.map((item, idx) => (
               <button
-                key={index}
+                key={idx}
                 onClick={item.onClick}
-                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
-                  item.active ? 'bg-white text-black' : 'text-gray-300 hover:bg-gray-700'
-                }`}
+                className={
+                  `relative group p-2 rounded-lg transition-colors duration-200 ease-in-out ${
+                    item.active
+                      ? 'bg-white text-black' 
+                      : 'text-gray-400 hover:bg-gray-700 hover:text-white'
+                  }`
+                }
               >
-                <item.icon className="w-5 h-5" />
-                <span className="font-medium">{item.name}</span>
+                <item.icon className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" />
+                <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 whitespace-nowrap bg-gray-800 text-white text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  {item.name}
+                </span>
               </button>
             ))}
           </div>
-          
           <div className="text-sm text-gray-400">
             Friday, June 6, 3:30pm
           </div>
         </div>
-      </div>
+      </nav>
 
       {/* OTT Platforms */}
       <div className="px-6 py-6">
@@ -157,14 +161,14 @@ const Home = () => {
             </button>
           ))}
           <button className="bg-gray-700 border-2 border-dashed border-gray-500 rounded-lg p-4 min-w-[120px] h-16 flex items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors">
-            <Grid3X3 className="w-6 h-6 text-gray-400" />
+            <Sofa className="w-6 h-6 text-gray-400" />
           </button>
         </div>
       </div>
 
       {/* Surprise Me Button */}
       <div className="px-6 mb-4">
-        <Button variant="outline" className="border-gray-600 text-white hover:bg-gray-700">
+        <Button variant="outline" className="border-gray-600 text-black hover:text-white hover:bg-gray-700">
           Surprise Me
         </Button>
       </div>
@@ -182,7 +186,7 @@ const Home = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="text-sm text-gray-300 text-center">{movie.title}</p>
+              <p className="text-sm text-gray-300 text-center font-bold">{movie.title}</p>
             </div>
           ))}
         </div>
