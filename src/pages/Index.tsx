@@ -8,6 +8,7 @@ const Index = () => {
   const firstSectionRef = useRef(null);
 
   useEffect(() => {
+    const currentRef = firstSectionRef.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
         setFadeOut(!entry.isIntersecting);
@@ -15,13 +16,13 @@ const Index = () => {
       { threshold: 0.1 }
     );
 
-    if (firstSectionRef.current) {
-      observer.observe(firstSectionRef.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (firstSectionRef.current) {
-        observer.unobserve(firstSectionRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
   }, []);
@@ -44,7 +45,7 @@ const Index = () => {
           <MovieGrid />
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/70 z-10 pointer-events-none" />
+        {/* <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-black/70 z-10 pointer-events-none" /> */}
 
         <div className="relative z-20">
           <Header />
@@ -53,7 +54,7 @@ const Index = () => {
       </section>
 
       {/* Section 2 */}
-      <section className="min-h-screen flex items-center justify-center px-6 z-10 relative snap-start mt-16">
+      <section className="min-h-screen flex items-center justify-center px-6 z-10 relative snap-start">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-left">
             <h2 className="text-4xl md:text-7xl font-bold text-white mb-6 leading-tight">
@@ -75,7 +76,7 @@ const Index = () => {
       </section>
 
       {/* Section 3 */}
-      <section className="min-h-screen flex items-center justify-center px-6 z-10 relative snap-start mt-16">
+      <section className="min-h-screen flex items-center justify-center px-6 z-10 relative snap-start">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="relative order-2 lg:order-1">
             <img
@@ -96,7 +97,7 @@ const Index = () => {
       </section>
 
       {/* Section 4 */}
-      <section className="min-h-screen flex flex-col items-center justify-center px-6 z-10 relative snap-start mt-16">
+      <section className="min-h-screen flex flex-col items-center justify-center px-6 z-10 relative snap-start">
         <div className="max-w-6xl mx-auto text-center mb-auto pt-20">
           <h1 className="text-6xl md:text-6xl font-bold text-white mb-12 leading-tight">
             Maximize your<br />
