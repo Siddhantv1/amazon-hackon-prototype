@@ -1,363 +1,212 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Badge } from "@/components/ui/badge";
-import { Users, Copy, Check, UserCheck, UserX, Play, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Users, UserPlus, Crown, Check, X } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+interface Member {
+  id: number;
+  name: string;
+  status: string;
+  isLeader: boolean;
+}
+
 const WatchParty = () => {
-  const [view, setView] = useState<'select' | 'create' | 'join' | 'lobby'>('select');
-  const [partyCode, setPartyCode] = useState('');
-  const [joinCode, setJoinCode] = useState('');
-  const [partyName, setPartyName] = useState('');
-  const [isLeader, setIsLeader] = useState(false);
-  const [copied, setCopied] = useState(false);
-  const [members, setMembers] = useState([
-    { id: 1, name: 'Siddhant O. (You)', status: 'accepted', isLeader: true },
+  const navigate = useNavigate();
+  const [roomCode, setRoomCode] = useState('');
+  const [createMode, setCreateMode] = useState(false);
+  const [partyCreated, setPartyCreated] = useState(false);
+  const [generatedCode, setGeneratedCode] = useState('');
+  const [members, setMembers] = useState<Member[]>([
+    { id: 1, name: 'James M. (You)', status: 'Host', isLeader: true },
   ]);
   const [pendingMembers, setPendingMembers] = useState([
-    { id: 2, name: 'Alice Johnson', status: 'pending' },
-    { id: 3, name: 'Bob Smith', status: 'pending' },
+    { id: 2, name: 'Sarah K.', status: 'Pending' },
+    { id: 3, name: 'Mike R.', status: 'Pending' },
   ]);
-  const [showPendingDialog, setShowPendingDialog] = useState(false);
-  const navigate = useNavigate();
 
-  const generatePartyCode = () => {
-    return Math.random().toString().substr(2, 6);
+  const generateRoomCode = () => {
+    const code = Math.random().toString(36).substring(2, 8).toUpperCase();
+    setGeneratedCode(code);
+    setPartyCreated(true);
   };
 
-  const handleCreateParty = () => {
-    const code = generatePartyCode();
-    setPartyCode(code);
-    setIsLeader(true);
-    setView('lobby');
-  };
-
-  const handleJoinParty = () => {
-    if (joinCode.length === 6) {
-      setPartyCode(joinCode);
-      setIsLeader(false);
-      setMembers([
-        { id: 1, name: 'Alice (Leader)', status: 'accepted', isLeader: true },
-        { id: 2, name: 'James M. (You)', status: 'accepted', isLeader: false },
-      ]);
-      setView('lobby');
-    }
-  };
-
-  const copyCode = () => {
-    navigator.clipboard.writeText(partyCode);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
-  };
-
-  const handleMemberAction = (memberId: number, action: 'accept' | 'decline') => {
+  const acceptMember = (memberId: number) => {
     const member = pendingMembers.find(m => m.id === memberId);
-    if (member && action === 'accept') {
-      setMembers([...members, { ...member, status: 'accepted', isLeader: false }]);
+    if (member) {
+      setMembers([...members, { ...member, status: 'Connected', isLeader: false }]);
+      setPendingMembers(pendingMembers.filter(m => m.id !== memberId));
     }
+  };
+
+  const rejectMember = (memberId: number) => {
     setPendingMembers(pendingMembers.filter(m => m.id !== memberId));
   };
 
-  const startWatching = () => {
-    navigate('/home?watchParty=true');
+  const joinLounge = () => {
+    if (roomCode.trim()) {
+      navigate(`/home?lounge=true`);
+    }
   };
 
-  if (view === 'select') {
+  const startWatching = () => {
+    navigate(`/home?lounge=true`);
+  };
+
+  if (partyCreated) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
-        <div className="max-w-4xl w-full">
-          <div className="text-center mb-8">
-            <Button 
-              variant="ghost" 
+      <div className="min-h-screen bg-gray-900 text-white p-6">
+        <div className="max-w-2xl mx-auto">
+          <div className="flex items-center mb-8">
+            <Button
+              variant="ghost"
               onClick={() => navigate('/home')}
-              className="absolute top-4 left-4 text-white hover:bg-gray-800 hover:text-white"
+              className="text-white hover:text-white hover:bg-white/10 mr-4"
             >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Home
+              <ArrowLeft className="w-5 h-5" />
             </Button>
-            <h1 className="text-4xl font-bold text-white mb-2">
-              <Users className="w-10 h-10 inline mr-3" />
-              Watch Party
-            </h1>
-            <p className="text-gray-400 text-lg">Stream movies together with friends</p>
+            <h1 className="text-3xl font-bold">Your Lounge</h1>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-6">
-            <Card className="bg-gray-900 border-gray-800 hover:border-yellow-500 transition-colors cursor-pointer" onClick={() => setView('create')}>
-              <CardHeader className="text-center">
-                <div className="mx-auto w-16 h-16 bg-red-600 rounded-full flex items-center justify-center mb-4">
-                  <Users className="w-8 h-8 text-white" />
-                </div>
-                <CardTitle className="text-2xl text-white">Create Watch Party</CardTitle>
-                <CardDescription className="text-gray-400">
-                  Start a new watch party and invite friends
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="text-gray-300 space-y-2">
-                  <li>• Be the party leader</li>
-                  <li>• Control who joins</li>
-                  <li>• Choose what to watch</li>
-                  <li>• Sync playback for everyone</li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gray-900 border-gray-800 hover:border-blue-500 transition-colors cursor-pointer" onClick={() => setView('join')}>
-              <CardHeader className="text-center">
-                <div className="mx-auto w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mb-4">
-                  <UserCheck className="w-8 h-8 text-white" />
-                </div>
-                <CardTitle className="text-2xl text-white">Join Watch Party</CardTitle>
-                <CardDescription className="text-gray-400">
-                  Enter a party code to join friends
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <ul className="text-gray-300 space-y-2">
-                  <li>• Join with 6-digit code</li>
-                  <li>• Watch synchronized content</li>
-                  <li>• Chat with friends</li>
-                  <li>• Enjoy together</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
-    );
-  }
-
-  if (view === 'create') {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
-        <Card className="w-full max-w-md bg-gray-900 border-gray-800">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-white">Create Watch Party</CardTitle>
-            <CardDescription className="text-gray-400">
-              Set up your watch party room
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="partyName" className="text-white">Party Name (Optional)</Label>
-              <Input
-                id="partyName"
-                placeholder="e.g., Movie Night with Friends"
-                value={partyName}
-                onChange={(e) => setPartyName(e.target.value)}
-                className="bg-gray-800 border-gray-700 text-white"
-              />
+          <div className="bg-gray-800 rounded-lg p-6 mb-6">
+            <div className="text-center mb-6">
+              <h2 className="text-xl font-semibold mb-2">Lounge Code</h2>
+              <div className="text-3xl font-mono bg-[#146EB4] text-white px-6 py-3 rounded-lg inline-block">
+                {generatedCode}
+              </div>
+              <p className="text-gray-400 mt-2">Share this code with friends to join your lounge</p>
             </div>
-            <div className="flex space-x-2">
-              <Button 
-                onClick={() => setView('select')}
-                variant="outline"
-                className="flex-1 border-gray-600 text-black hover:bg-gray-700"
-              >
-                Back
-              </Button>
-              <Button 
-                onClick={handleCreateParty}
-                className="flex-1 bg-teal-600 hover:bg-teal-700"
-              >
-                Create Party
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  if (view === 'join') {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center p-4">
-        <Card className="w-full max-w-md bg-gray-900 border-gray-800">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-white">Join Watch Party</CardTitle>
-            <CardDescription className="text-gray-400">
-              Enter the 6-digit party code
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="joinCode" className="text-white">Party Code</Label>
-              <Input
-                id="joinCode"
-                placeholder="123456"
-                value={joinCode}
-                onChange={(e) => setJoinCode(e.target.value.slice(0, 6))}
-                className="bg-gray-800 border-gray-700 text-white text-center text-2xl tracking-wider"
-                maxLength={6}
-              />
-            </div>
-            <div className="flex space-x-2">
-              <Button 
-                onClick={() => setView('select')}
-                variant="outline"
-                className="flex-1 border-gray-600 text-black hover:bg-gray-700"
-              >
-                Back
-              </Button>
-              <Button 
-                onClick={handleJoinParty}
-                disabled={joinCode.length !== 6}
-                className="flex-1 bg-blue-600 hover:bg-blue-700"
-              >
-                Join Party
-              </Button>
-            </div>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-
-  if (view === 'lobby') {
-    return (
-      <div className="min-h-screen bg-black p-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="flex justify-between items-center mb-8">
-            <Button 
-              variant="ghost" 
-              onClick={() => setView('select')}
-              className="text-white hover:bg-gray-800 hover:text-white"
-            >
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Leave Party
-            </Button>
-            {isLeader && pendingMembers.length > 0 && (
-              <Button 
-                onClick={() => setShowPendingDialog(true)}
-                variant="outline"
-                className="border-yellow-500 text-yellow-500 hover:bg-yellow-500 hover:text-black"
-              >
-                {pendingMembers.length} Pending Requests
-              </Button>
-            )}
           </div>
 
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-white mb-2">
-              {partyName || 'Watch Party Lobby'}
-            </h1>
-            <div className="flex items-center justify-center space-x-2 mb-4">
-              <span className="text-gray-400">Party Code:</span>
-              <code className="bg-gray-800 px-3 py-1 rounded text-white text-xl tracking-wider">
-                {partyCode}
-              </code>
-              <Button
-                size="sm"
-                variant="outline"
-                onClick={copyCode}
-                className="border-gray-600 text-black hover:bg-gray-700"
-              >
-                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
-              </Button>
-            </div>
-            <p className="text-gray-400">Share this code with friends to invite them</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            <Card className="bg-gray-900 border-gray-800">
-              <CardHeader>
-                <CardTitle className="text-white flex items-center">
-                  <Users className="w-5 h-5 mr-2" />
-                  Members ({members.length})
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-3">
-                  {members.map((member) => (
-                    <div key={member.id} className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
-                      <span className="text-white">{member.name}</span>
-                      <div className="flex items-center space-x-2">
-                        {member.isLeader && (
-                          <Badge className="bg-red-600 text-white">Leader</Badge>
-                        )}
-                        <Badge className="bg-green-600 text-white">Ready</Badge>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="bg-gray-900 border-gray-800">
-              <CardHeader>
-                <CardTitle className="text-white">Party Settings</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="text-gray-300">
-                  <p className="mb-2">• Synchronized playback</p>
-                  <p className="mb-2">• Shared pause/play controls</p>
-                  <p className="mb-2">• Real-time chat</p>
-                  <p>• HD quality streaming</p>
-                </div>
-                {isLeader && (
-                  <Button 
-                    onClick={startWatching}
-                    className="w-full bg-cyan-600 text-black hover:bg-cyan-700"
-                    size="lg"
-                  >
-                    <Play className="w-5 h-5 mr-2" />
-                    Start Watching
-                  </Button>
-                )}
-                {!isLeader && (
-                  <div className="text-center p-4 bg-gray-800 rounded-lg">
-                    <p className="text-gray-400">Waiting for the leader to start...</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        <Dialog open={showPendingDialog} onOpenChange={setShowPendingDialog}>
-          <DialogContent className="bg-gray-900 border-gray-800">
-            <DialogHeader>
-              <DialogTitle className="text-white">Pending Join Requests</DialogTitle>
-              <DialogDescription className="text-gray-400">
-                Approve or decline members wanting to join your party
-              </DialogDescription>
-            </DialogHeader>
+          <div className="bg-gray-800 rounded-lg p-6 mb-6">
+            <h3 className="text-lg font-semibold mb-4 flex items-center">
+              <Users className="w-5 h-5 mr-2" />
+              Members ({members.length})
+            </h3>
             <div className="space-y-3">
-              {pendingMembers.map((member) => (
-                <div key={member.id} className="flex items-center justify-between p-3 bg-gray-800 rounded-lg">
-                  <span className="text-white">{member.name}</span>
-                  <div className="flex space-x-2">
-                    <Button
-                      size="sm"
-                      onClick={() => handleMemberAction(member.id, 'accept')}
-                      className="bg-green-600 hover:bg-green-700"
-                    >
-                      <UserCheck className="w-4 h-4" />
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={() => handleMemberAction(member.id, 'decline')}
-                      className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
-                    >
-                      <UserX className="w-4 h-4" />
-                    </Button>
+              {members.map((member) => (
+                <div key={member.id} className="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-8 h-8 bg-[#146EB4] rounded-full flex items-center justify-center">
+                      <span className="text-white font-bold text-sm">
+                        {member.name.charAt(0)}
+                      </span>
+                    </div>
+                    <div>
+                      <p className="font-medium">{member.name}</p>
+                      <p className="text-sm text-gray-400">{member.status}</p>
+                    </div>
                   </div>
+                  {member.isLeader && (
+                    <Crown className="w-5 h-5 text-[#FF9900]" />
+                  )}
                 </div>
               ))}
             </div>
-          </DialogContent>
-        </Dialog>
+          </div>
+
+          {pendingMembers.length > 0 && (
+            <div className="bg-gray-800 rounded-lg p-6 mb-6">
+              <h3 className="text-lg font-semibold mb-4 flex items-center">
+                <UserPlus className="w-5 h-5 mr-2" />
+                Pending Requests ({pendingMembers.length})
+              </h3>
+              <div className="space-y-3">
+                {pendingMembers.map((member) => (
+                  <div key={member.id} className="flex items-center justify-between p-3 bg-gray-700 rounded-lg">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                        <span className="text-white font-bold text-sm">
+                          {member.name.charAt(0)}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="font-medium">{member.name}</p>
+                        <p className="text-sm text-gray-400">{member.status}</p>
+                      </div>
+                    </div>
+                    <div className="flex space-x-2">
+                      <Button
+                        size="sm"
+                        onClick={() => acceptMember(member.id)}
+                        className="bg-green-600 hover:bg-green-700 text-white"
+                      >
+                        <Check className="w-4 h-4" />
+                      </Button>
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => rejectMember(member.id)}
+                        className="border-red-600 text-red-600 hover:bg-red-600 hover:text-white"
+                      >
+                        <X className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <Button
+            onClick={startWatching}
+            className="w-full bg-[#FF9900] hover:bg-[#FF9900]/80 text-black py-3 text-lg font-semibold"
+          >
+            Start Watching Together
+          </Button>
+        </div>
       </div>
     );
   }
 
-  return null;
+  return (
+    <div className="min-h-screen bg-gray-900 text-white flex items-center justify-center p-6">
+      <div className="max-w-md w-full">
+        <div className="text-center mb-8">
+          <Button
+            variant="ghost"
+            onClick={() => navigate('/home')}
+            className="text-white hover:text-white hover:bg-white/10 mb-4"
+          >
+            <ArrowLeft className="w-5 h-5 mr-2" />
+            Back to Home
+          </Button>
+          <h1 className="text-4xl font-bold mb-4">Join a Lounge</h1>
+          <p className="text-gray-400">Watch movies and shows together with friends</p>
+        </div>
+
+        <div className="bg-gray-800 rounded-lg p-6 mb-6">
+          <h2 className="text-xl font-semibold mb-4">Enter Lounge Code</h2>
+          <Input
+            placeholder="Enter 6-digit code"
+            value={roomCode}
+            onChange={(e) => setRoomCode(e.target.value.toUpperCase())}
+            className="mb-4 text-center text-lg font-mono bg-gray-700 border-gray-600 text-white"
+            maxLength={6}
+          />
+          <Button
+            onClick={joinLounge}
+            disabled={roomCode.length !== 6}
+            className="w-full bg-[#146EB4] hover:bg-[#146EB4]/80 text-white"
+          >
+            Join Lounge
+          </Button>
+        </div>
+
+        <div className="text-center">
+          <p className="text-gray-400 mb-4">Or</p>
+          <Button
+            onClick={generateRoomCode}
+            variant="outline"
+            className="w-full border-[#FF9900] text-[#FF9900] hover:bg-[#FF9900] hover:text-black"
+          >
+            Create New Lounge
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default WatchParty;

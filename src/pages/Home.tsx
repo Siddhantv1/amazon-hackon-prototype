@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Search, Settings, Home as HomeIcon, Tv, Bookmark, Plus, Users } from "lucide-react";
+import { Search, Home as HomeIcon, Tv, Bookmark, Settings, Grid3X3 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AudioInput from "@/components/AudioInput";
 
@@ -9,7 +9,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [audioInputVisible, setAudioInputVisible] = useState(false);
   const [inWatchParty, setInWatchParty] = useState(false);
-  const [partyMembers, setPartyMembers] = useState(3); // Example number of members
+  const [partyMembers, setPartyMembers] = useState(3);
   
   // Effect for handling key press events
   useEffect(() => {
@@ -34,27 +34,47 @@ const Home = () => {
     };
   }, []);
 
-  // Check URL parameters for watchParty information when the component mounts
+  // Check URL parameters for lounge information when the component mounts
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    const watchParty = urlParams.get('watchParty');
-    if (watchParty === 'true') {
+    const lounge = urlParams.get('lounge');
+    if (lounge === 'true') {
       setInWatchParty(true);
     }
   }, []);
 
-  const apps = [
-    { name: 'Netflix', color: 'bg-red-600', textColor: 'text-white' },
-    { name: 'Paramount+', color: 'bg-blue-600', textColor: 'text-white' },
-    { name: 'Freevee', color: 'bg-yellow-400', textColor: 'text-black' },
-    { name: 'Hulu', color: 'bg-green-500', textColor: 'text-black' },
-    { name: 'Max', color: 'bg-blue-700', textColor: 'text-white' },
-    { name: 'Disney+', color: 'bg-blue-800', textColor: 'text-white' },
-    { name: 'ESPN', color: 'bg-red-700', textColor: 'text-white' },
-    { name: 'Philo', color: 'bg-white', textColor: 'text-blue-600' },
-    { name: 'FuboTV', color: 'bg-orange-600', textColor: 'text-white' },
-    { name: 'Prime Video', color: 'bg-[#FF9900]', textColor: 'text-black' },
-    { name: 'YouTube TV', color: 'bg-white', textColor: 'text-red-600' }
+  const ottPlatforms = [
+    { name: 'Netflix', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Netflix-Logo.png', url: 'https://netflix.com', bgColor: 'bg-red-600' },
+    { name: 'Prime Video', logo: 'https://m.media-amazon.com/images/G/01/digital/video/web/Logo-min.png', url: 'https://primevideo.com', bgColor: 'bg-[#146EB4]' },
+    { name: 'YouTube', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg', url: 'https://youtube.com', bgColor: 'bg-red-600' },
+    { name: 'Disney+', logo: 'https://prod-ripcut-delivery.disney-plus.net/v1/variant/disney/D7AEE1F05D10FC37C873176AAA26F777FC1B71E7A6563F36C6B1B497116C0454/scale?width=1200&aspectRatio=1.78&format=png', url: 'https://disneyplus.com', bgColor: 'bg-blue-800' },
+    { name: 'Hulu', logo: 'https://press.hulu.com/wp-content/uploads/2020/02/hulu-white-1.png', url: 'https://hulu.com', bgColor: 'bg-green-500' },
+    { name: 'Zee5', logo: 'https://akamaividz2.zee5.com/image/upload/w_1013,h_405,c_scale,f_webp,q_auto:eco/resources/0-1-manual_65395a801a6a4b4a850b9094aebccf23/list/1170x4051668082074884zee5logoforweb.png', url: 'https://zee5.com', bgColor: 'bg-purple-600' },
+    { name: 'JioHotstar', logo: 'https://img10.hotstar.com/image/upload/f_auto,q_90,w_256/v1661346101/web-images/logo-d-plus.svg', url: 'https://hotstar.com', bgColor: 'bg-yellow-500' },
+    { name: 'Sony Liv', logo: 'https://images.ottplay.com/images/sony-liv-1662019009.png', url: 'https://sonyliv.com', bgColor: 'bg-blue-900' },
+    { name: 'MX Player', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/MX_Player_logo.png/1200px-MX_Player_logo.png', url: 'https://mxplayer.in', bgColor: 'bg-orange-600' }
+  ];
+
+  const handlePlatformClick = (url: string) => {
+    window.open(url, '_blank', 'noopener,noreferrer');
+  };
+
+  const navItems = [
+    { name: 'Home', icon: HomeIcon, active: true },
+    { name: 'Search', icon: Search },
+    { name: 'Live TV', icon: Tv },
+    { name: 'Saved', icon: Bookmark },
+    { name: 'Lounge', icon: Grid3X3, onClick: () => navigate('/watch-party') },
+    { name: 'Settings', icon: Settings }
+  ];
+
+  const recommendedMovies = [
+    { title: "The Wilds", image: "https://m.media-amazon.com/images/M/MV5BOWIwZGY0ODEtMTUzYS00ZmYwLWI4NzUtMDUwNjVjNGVhZjZiXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" },
+    { title: "Outlander", image: "https://m.media-amazon.com/images/M/MV5BMTQzNzk4NzA4NF5BMl5BanBnXkFtZTgwNzY4OTQyMTE@._V1_.jpg" },
+    { title: "Yellowjackets", image: "https://m.media-amazon.com/images/M/MV5BYjJmMWU3M2UtOGNjMS00ZDNmLWJiOWMtNjhkNTdkMjQ2NWEyXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" },
+    { title: "Baywatch", image: "https://m.media-amazon.com/images/M/MV5BMTEyOTU4MjI1M15BMl5BanBnXkFtZTgwMzg2NDEzNDE@._V1_.jpg" },
+    { title: "Reacher", image: "https://m.media-amazon.com/images/M/MV5BYWU4OGFjZGMtZDYzNC00NGZhLTllNWItZGI2M2E3N2YzNjJlXkEyXkFqcGdeQXVyMTEyMjM2NDc2._V1_.jpg" },
+    { title: "Bel Air", image: "https://m.media-amazon.com/images/M/MV5BNzAwNzUzNjY4NV5BMl5BanBnXkFtZTgwMzQ3NjM3ODE@._V1_.jpg" }
   ];
 
   return (
@@ -62,10 +82,11 @@ const Home = () => {
       {/* Audio Input Component */}
       <AudioInput visible={audioInputVisible} />
       
-      {/* Sidebar */}
-      <div className="fixed left-0 top-0 h-full w-64 bg-gray-800 p-4">
-        <div className="mb-8">
-          <div className="flex items-center space-x-2 text-white">
+      {/* Featured Content Banner */}
+      <div className="relative h-[60vh] bg-gradient-to-r from-[#000000] to-[#146EB4] overflow-hidden">
+        <div className="absolute inset-0 bg-black/40 z-10" />
+        <div className="absolute top-6 left-6 z-20">
+          <div className="flex items-center space-x-2 text-white mb-8">
             <div className="w-8 h-8 bg-[#146EB4] rounded-full flex items-center justify-center">
               <span className="text-white font-bold text-sm">JM</span>
             </div>
@@ -77,103 +98,93 @@ const Home = () => {
             </span>
           </div>
         </div>
-
-        <nav className="space-y-2">
-          <div className="flex items-center space-x-3 p-3 rounded-lg text-gray-300">
-            <div className="w-6 h-6 flex items-center justify-center">
-              <div className="w-4 h-4 border-2 border-gray-400 rounded"></div>
-            </div>
-            <span>Inputs</span>
+        
+        <div className="absolute inset-0 flex items-center justify-center z-20">
+          <div className="text-center">
+            <h1 className="text-6xl font-bold tracking-wider mb-4 font-['Bebas_Neue'] text-[#FF9900]">
+              OUTER RANGE
+            </h1>
+            <p className="text-xl mb-4">WATCH NOW | prime video</p>
+            <Button className="bg-gray-600 hover:bg-gray-700 text-white px-6 py-2 rounded">
+              Learn More
+            </Button>
           </div>
-
-          <div className="flex items-center space-x-3 p-3 bg-white rounded-lg text-black">
-            <HomeIcon className="w-6 h-6" />
-            <span className="font-medium">Home</span>
-          </div>
-
-          <div className="flex items-center space-x-3 p-3 rounded-lg text-gray-300 hover:bg-gray-700 cursor-pointer">
-            <Search className="w-6 h-6" />
-            <span>Search</span>
-          </div>
-
-          <div className="flex items-center space-x-3 p-3 rounded-lg text-gray-300 hover:bg-gray-700 cursor-pointer">
-            <Tv className="w-6 h-6" />
-            <span>Live TV</span>
-          </div>
-
-          <div className="flex items-center space-x-3 p-3 rounded-lg text-gray-300 hover:bg-gray-700 cursor-pointer">
-            <Bookmark className="w-6 h-6" />
-            <span>Saved</span>
-          </div>
-
-          <div className="flex items-center space-x-3 p-3 rounded-lg text-gray-300 hover:bg-gray-700 cursor-pointer">
-            <Plus className="w-6 h-6" />
-            <span>Add Apps</span>
-          </div>
-
-          <div 
-            className="flex items-center space-x-3 p-3 rounded-lg text-gray-300 hover:bg-gray-700 cursor-pointer"
-            onClick={() => navigate('/watch-party')}
-          >
-            <Users className="w-6 h-6" />
-            <span>Watch Party</span>
-          </div>
-
-          <div className="flex items-center space-x-3 p-3 rounded-lg text-gray-300 hover:bg-gray-700 cursor-pointer">
-            <Settings className="w-6 h-6" />
-            <span>Settings</span>
-          </div>
-        </nav>
+        </div>
+        
+        {/* Navigation dots */}
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
+          <div className="w-3 h-3 bg-white rounded-full"></div>
+          <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+          <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+          <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+        </div>
       </div>
 
-      {/* Main Content */}
-      <div className="ml-64 p-8">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+      {/* Horizontal Navigation Bar */}
+      <div className="bg-gray-800 px-6 py-4">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-8">
+            {navItems.map((item, index) => (
+              <button
+                key={index}
+                onClick={item.onClick}
+                className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-colors ${
+                  item.active ? 'bg-white text-black' : 'text-gray-300 hover:bg-gray-700'
+                }`}
+              >
+                <item.icon className="w-5 h-5" />
+                <span className="font-medium">{item.name}</span>
+              </button>
+            ))}
+          </div>
+          
           <div className="text-sm text-gray-400">
             Friday, June 6, 3:30pm
           </div>
-          <Button variant="outline" className=" border-gray-600 text-black hover:bg-gray-700">
-            Surprise Me
-          </Button>
         </div>
+      </div>
 
-        {/* Featured Content */}
-        <div className="mb-8">
-          <div className="relative h-64 bg-gradient-to-r from-[#000000] to-[#146EB4] rounded-lg overflow-hidden mb-4">
-            <div className="absolute inset-0 flex items-center justify-center">
-              <div className="text-center">
-                <h1 className="text-4xl font-bold tracking-wider mb-2 font-bebas">
-                  THE PERIPHERAL
-                </h1>
-                <p className="text-lg">NEW EPISODES FRIDAYS | prime video</p>
-              </div>
-            </div>
-            <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-2">
-              <div className="w-2 h-2 bg-white rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-              <div className="w-2 h-2 bg-gray-400 rounded-full"></div>
-            </div>
-          </div>
+      {/* OTT Platforms */}
+      <div className="px-6 py-6">
+        <div className="flex items-center space-x-4 overflow-x-auto pb-4">
+          {ottPlatforms.map((platform, index) => (
+            <button
+              key={index}
+              onClick={() => handlePlatformClick(platform.url)}
+              className={`${platform.bgColor} rounded-lg p-4 min-w-[120px] h-16 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform`}
+            >
+              <span className="font-bold text-white text-sm">{platform.name}</span>
+            </button>
+          ))}
+          <button className="bg-gray-700 border-2 border-dashed border-gray-500 rounded-lg p-4 min-w-[120px] h-16 flex items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors">
+            <Grid3X3 className="w-6 h-6 text-gray-400" />
+          </button>
         </div>
+      </div>
 
-        {/* Your Apps Section */}
-        <div>
-          <h2 className="text-xl font-semibold mb-6">Your Apps</h2>
-          <div className="grid grid-cols-4 gap-4 mb-4">
-            {apps.slice(0, 11).map((app, index) => (
-              <div
-                key={index}
-                className={`${app.color} ${app.textColor} rounded-xl p-6 h-32 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform`}
-              >
-                <span className="font-bold text-lg">{app.name}</span>
+      {/* Surprise Me Button */}
+      <div className="px-6 mb-4">
+        <Button variant="outline" className="border-gray-600 text-white hover:bg-gray-700">
+          Surprise Me
+        </Button>
+      </div>
+
+      {/* Recommended Content */}
+      <div className="px-6 pb-8">
+        <h2 className="text-xl font-semibold mb-4">Recommended for You</h2>
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+          {recommendedMovies.map((movie, index) => (
+            <div key={index} className="group cursor-pointer">
+              <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden mb-2 group-hover:scale-105 transition-transform">
+                <img 
+                  src={movie.image} 
+                  alt={movie.title}
+                  className="w-full h-full object-cover"
+                />
               </div>
-            ))}
-            <div className="bg-gray-700 border-2 border-dashed border-gray-500 rounded-xl p-6 h-32 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors">
-              <Plus className="w-8 h-8 text-gray-400 mb-2" />
-              <span className="text-gray-400 font-medium">Add Apps</span>
+              <p className="text-sm text-gray-300 text-center">{movie.title}</p>
             </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
