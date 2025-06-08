@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Search, Home as HomeIcon, Tv, Bookmark, Settings, Sofa } from "lucide-react";
+import { Search, Home as HomeIcon, Tv, Bookmark, Settings, Sofa, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AudioInput from "@/components/AudioInput";
 
@@ -47,7 +47,7 @@ const Home = () => {
     { name: 'Netflix', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Netflix-Logo.png', url: 'https://netflix.com', bgColor: 'bg-red-600' },
     { name: 'Prime Video', logo: 'https://m.media-amazon.com/images/G/01/digital/video/web/Logo-min.png', url: 'https://primevideo.com', bgColor: 'bg-[#146EB4]' },
     { name: 'YouTube', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg', url: 'https://youtube.com', bgColor: 'bg-red-600' },
-    { name: 'Zee5', logo: 'https://akamaividz2.zee5.com/image/upload/w_1013,h_405,c_scale,f_webp,q_auto:eco/resources/0-1-manual_65395a801a6a4b4a850b9094aebccf23/list/1170x4051668082074884zee5logoforweb.png', url: 'https://zee5.com', bgColor: 'bg-purple-600' },
+    { name: 'Zee5', logo: 'https://akamaividz2.zee5.com/image/upload/w_1013,h_405,c_scale,f_webp,q_auto:eco/resources/0-1-manual_65395a801a6a4b4a850b9094aebccf23/list/1170x4051668082074884zee5logoforweb.png', url: 'https://zee5.com', bgColor: 'bg-black' },
     { name: 'JioHotstar', logo: 'https://img10.hotstar.com/image/upload/f_auto,q_90,w_256/v1661346101/web-images/logo-d-plus.svg', url: 'https://hotstar.com', bgColor: 'bg-yellow-500' },
     { name: 'Sony Liv', logo: 'https://images.ottplay.com/images/sony-liv-1662019009.png', url: 'https://sonyliv.com', bgColor: 'bg-blue-900' },
     { name: 'MX Player', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/MX_Player_logo.png/1200px-MX_Player_logo.png', url: 'https://mxplayer.in', bgColor: 'bg-orange-600' }
@@ -72,7 +72,13 @@ const Home = () => {
     { title: "Peaky Blinders", image: "https://miro.medium.com/v2/resize:fit:820/1*EsNbEC8u5QeWqMqa8Hk-Ew.png" },
     { title: "Panchayat", image: "https://feeds.abplive.com/onecms/images/uploaded-images/2024/05/16/3cc6265c0949ec8d0792087bb48eb5fa1715847610947274_original.jpeg?impolicy=abp_cdn&imwidth=640" },
     { title: "Reacher", image: "https://devdiscourse.blob.core.windows.net/devnews/10_08_2023_09_53_10_4031052.jpg" },
-    { title: "Criminal Justice", image: "https://i.ytimg.com/vi/98pKCUl4ljM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLD5SnLDeU-j0xix5PPDFpXV_DcWyg" }
+    { title: "Criminal Justice", image: "https://i.ytimg.com/vi/98pKCUl4ljM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLD5SnLDeU-j0xix5PPDFpXV_DcWyg" },
+    { title: "Live: ICCT20 IND v PAK", image: "https://assets-in.bmscdn.com/discovery-catalog/events/et00400032-edznwvluwe-landscape.jpg"},
+    { title: "Invincible", image: "https://4kwallpapers.com/images/wallpapers/invincible-poster-2560x1440-20135.png"},
+    { title: "Top Gun: Maverick", image: "https://flixchatter.net/wp-content/uploads/2022/05/topgun2-poster.jpg?w=640"},
+    { title: "28 Days Later", image: "https://img.englishcinemakyiv.com/yjN9fvEs8f6SN5-l8gp6i8F9Y7xnPSacq9ZT-R6QQ90/resize:fill:800:450:1:0/gravity:sm/aHR0cHM6Ly9leHBhdGNpbmVtYXByb2QuYmxvYi5jb3JlLndpbmRvd3MubmV0L2ltYWdlcy83ODE5NjgzYS0xODdiLTQ3MTQtODNhZC03ZGQ2YmQyZjIzZWMuanBn.jpg" },
+    { title: "Friends", image: "https://rukminim2.flixcart.com/image/850/1000/l1whaq80/poster/e/z/i/small-poster-friends-digital-art-wall-poster-300gsm-matt-13x19-original-imagddyjzrqgzfqz.jpeg?q=90&crop=false"},
+    { title: "Madgaon Express", image: "https://static.toiimg.com/photo/108237610.cms"},
   ];
 
   return (
@@ -122,21 +128,19 @@ const Home = () => {
       {/* Nav Bar */}
       <nav className="bg-gray-800 px-6 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex space-x-4 relative">
+          <div className="flex space-x-6">
             {navItems.map((item, idx) => (
               <button
                 key={idx}
                 onClick={item.onClick}
                 className={
-                  `relative group p-2 rounded-lg transition-colors duration-200 ease-in-out ${
-                    item.active
-                      ? 'bg-white text-black' 
-                      : 'text-gray-400 hover:bg-gray-700 hover:text-white'
+                  `flex items-center p-2 rounded-lg transition-colors duration-200 ease-in-out group ${
+                    item.active ? 'bg-white text-black' : 'text-gray-400 hover:bg-gray-700 hover:text-white'
                   }`
                 }
               >
                 <item.icon className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" />
-                <span className="absolute left-full ml-2 top-1/2 -translate-y-1/2 whitespace-nowrap bg-gray-800 text-white text-sm rounded px-2 py-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <span className="text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   {item.name}
                 </span>
               </button>
@@ -147,6 +151,7 @@ const Home = () => {
           </div>
         </div>
       </nav>
+
 
       {/* OTT Platforms */}
       <div className="px-6 py-6">
@@ -161,7 +166,7 @@ const Home = () => {
             </button>
           ))}
           <button className="bg-gray-700 border-2 border-dashed border-gray-500 rounded-lg p-4 min-w-[120px] h-16 flex items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors">
-            <Sofa className="w-6 h-6 text-gray-400" />
+            <Plus className="w-6 h-6 text-gray-400" />
           </button>
         </div>
       </div>
