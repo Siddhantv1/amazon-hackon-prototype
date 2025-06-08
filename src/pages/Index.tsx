@@ -25,13 +25,13 @@ const Index = () => {
       </div>
 
       {/* Screen 2 - TV that gets you */}
-      <div className="min-h-screen bg-slate-800 flex items-center justify-center px-6 transition-all duration-1000 ease-in-out">
+      <div className="min-h-screen bg-section flex items-center justify-center px-6 transition-all duration-1000 ease-in-out">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-left">
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
               TV that gets you
             </h2>
-            <p class="text-lg text-gray-300 leading-relaxed">
+            <p className="text-lg text-gray-300 leading-relaxed">
               By serving up the best recommendations from all your apps in one place,
               Fire TV makes it easier than ever to find what to watch.
             </p>
@@ -60,7 +60,7 @@ const Index = () => {
             <h2 className="text-4xl md:text-5xl font-bold text-white mb-6 leading-tight">
               Stream your heart out
             </h2>
-            <p class="text-lg text-gray-300 leading-relaxed">
+            <p className="text-lg text-gray-300 leading-relaxed">
               Over 1.5 million movies and TV episodes. Watch favorites from Netflix, Prime Video, Disney+, Max, Apple TV+, Peacock, STARZ, Paramount+, and more.
             </p>
           </div>
@@ -68,7 +68,7 @@ const Index = () => {
       </div>
 
       {/* Screen 4 - Maximize your Fire TV experience */}
-      <div className="min-h-screen bg-slate-800 flex flex-col items-center justify-center px-6 transition-all duration-1000 ease-in-out">
+      <div className="min-h-screen bg-section flex flex-col items-center justify-center px-6 transition-all duration-1000 ease-in-out">
         <div className="max-w-4xl mx-auto text-center mb-auto pt-20">
           <h2 className="text-4xl md:text-5xl font-bold text-white mb-12 leading-tight">
             Maximize your<br />
