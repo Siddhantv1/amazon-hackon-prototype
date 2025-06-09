@@ -71,7 +71,7 @@ const Index = () => {
             <img
               alt="TV recommendations grid"
               className="rounded-lg shadow-xl w-full"
-              src="/public/tv-recommendations.jpg"
+              src="/tv-recommendations.jpg"
             />
           </div>
         </div>
@@ -84,7 +84,7 @@ const Index = () => {
             <img
               alt="Streaming services logos"
               className="rounded-lg shadow-xl w-full"
-              src="/public/otts1.png"
+              src="/otts1.png"
             />
           </div>
           <div className="text-left order-1 lg:order-2">

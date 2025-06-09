@@ -103,7 +103,7 @@ const Home = () => {
           </div>
         </div>
         {/* recommended for today */}
-        <div className=" absolute inset-0 flex items-start z-20 bg-[url('/public/ok1.jpg')] bg-cover bg-center">
+        <div className=" absolute inset-0 flex items-start z-20 bg-[url('/ott.png')] bg-cover bg-center">
           <div className="ml-6 mt-60">
             <Button className="backdrop-filter backdrop-blur-sm bg-gray-900/30 hover:bg-white text-white hover:text-black px-6 py-2 rounded">
               Learn More
