@@ -10,6 +10,7 @@ const Home = () => {
   const [audioInputVisible, setAudioInputVisible] = useState(false);
   const [inWatchParty, setInWatchParty] = useState(false);
   const [partyMembers, setPartyMembers] = useState(3);
+  const [currentSlide, setCurrentSlide] = useState(0);
   
   // Effect for handling key press events
   useEffect(() => {
@@ -33,6 +34,23 @@ const Home = () => {
       window.removeEventListener('keyup', handleKeyUp);
     };
   }, []);
+  const bannerData = [
+    { image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?q=80&w=2070&auto=format&fit=crop", title: "Explore platforms", buttonText: "Learn More" },
+    { image: "https://m.media-amazon.com/images/S/pv-target-images/53e30470b1f7c88cfd4c9176cddcb156e9f152469edd71336f0c57c0839d2c7c.jpg", title: "Until Dawn", buttonText: "Watch Now" },
+    { image: "https://ntvb.tmsimg.com/assets/p28215037_v_h8_ab.jpg?w=1280&h=720", title: "A Minecraft Movie", buttonText: "Watch Now" },
+    { image: "https://static.mygov.in/static/s3fs-public/mygov_172101958351307401.jpg", title: "Live Sports Action", buttonText: "Go Live" },
+    { image: "https://wallpapers.com/images/hd/wolf-of-wall-street-movie-poster-dcz1czdi16k7oxts.jpg", title: "Relive the Classics", buttonText: "Top Picks" },
+  ];
+
+  // --- Logic for Custom Slider ---
+  useEffect(() => {
+    const slideInterval = setInterval(() => {
+      setCurrentSlide(prevSlide => (prevSlide + 1) % bannerData.length);
+    }, 10000); // scrolls every 10 seconds
+
+    return () => clearInterval(slideInterval);
+  }, [bannerData.length]);
+
 
   // Check URL parameters for lounge information when the component mounts
   useEffect(() => {
@@ -50,7 +68,7 @@ const Home = () => {
     { name: 'Zee5', logo: 'https://akamaividz2.zee5.com/image/upload/w_1013,h_405,c_scale,f_webp,q_auto:eco/resources/0-1-manual_65395a801a6a4b4a850b9094aebccf23/list/1170x4051668082074884zee5logoforweb.png', url: 'https://zee5.com', bgColor: 'bg-black' },
     { name: 'JioHotstar', logo: 'https://img10.hotstar.com/image/upload/f_auto,q_90,w_256/v1661346101/web-images/logo-d-plus.svg', url: 'https://hotstar.com', bgColor: 'bg-yellow-500' },
     { name: 'Sony Liv', logo: 'https://images.ottplay.com/images/sony-liv-1662019009.png', url: 'https://sonyliv.com', bgColor: 'bg-blue-900' },
-    { name: 'MX Player', logo: 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/MX_Player_logo.png/1200px-MX_Player_logo.png', url: 'https://mxplayer.in', bgColor: 'bg-orange-600' }
+    { name: 'MX Player', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5c/MX_Player_logo.svg', url: 'https://mxplayer.in', bgColor: 'bg-orange-600' }
   ];
 
   const handlePlatformClick = (url: string) => {
@@ -77,7 +95,7 @@ const Home = () => {
     { title: "Invincible", image: "https://4kwallpapers.com/images/wallpapers/invincible-poster-2560x1440-20135.png"},
     { title: "Top Gun: Maverick", image: "https://flixchatter.net/wp-content/uploads/2022/05/topgun2-poster.jpg?w=640"},
     { title: "28 Days Later", image: "https://img.englishcinemakyiv.com/yjN9fvEs8f6SN5-l8gp6i8F9Y7xnPSacq9ZT-R6QQ90/resize:fill:800:450:1:0/gravity:sm/aHR0cHM6Ly9leHBhdGNpbmVtYXByb2QuYmxvYi5jb3JlLndpbmRvd3MubmV0L2ltYWdlcy83ODE5NjgzYS0xODdiLTQ3MTQtODNhZC03ZGQ2YmQyZjIzZWMuanBn.jpg" },
-    { title: "Friends", image: "https://rukminim2.flixcart.com/image/850/1000/l1whaq80/poster/e/z/i/small-poster-friends-digital-art-wall-poster-300gsm-matt-13x19-original-imagddyjzrqgzfqz.jpeg?q=90&crop=false"},
+    { title: "The Big Bang Theory", image: "https://m.media-amazon.com/images/S/pv-target-images/7b982e06d08c1909f755785795fadde07545fc829a1525f27981c7fa5e1be5b3.jpg"},
     { title: "Madgaon Express", image: "https://static.toiimg.com/photo/108237610.cms"},
   ];
 
@@ -86,43 +104,54 @@ const Home = () => {
       {/* Audio Input Component */}
       <AudioInput visible={audioInputVisible} />
       
-      {/* Featured Content Banner */}
-      <div className="relative h-[60vh] bg-gradient-to-r from-[#000000] to-[#146EB4] overflow-hidden">
-        <div className="absolute inset-0 bg-black/40 z-10" />
-        <div className="absolute top-6 left-6 z-20">
-          <div className="flex items-center space-x-2 text-white mb-8">
+      {/* --- MODIFIED: Featured Content Banner is now a Custom Slider --- */}
+      <div className="relative h-[60vh] bg-gray-800 overflow-hidden">
+        {/* User Info */}
+        <div className="absolute top-6 left-6 z-30 flex items-center space-x-2 text-white">
             <div className="w-8 h-8 bg-[#146EB4] rounded-full flex items-center justify-center">
               <span className="text-white font-bold text-sm">JM</span>
             </div>
-            <span className="font-medium">
-              {inWatchParty 
-                ? `Siddhant O. & ${partyMembers} others`
-                : "Siddhant O."
-              }
+            <span className="font-medium drop-shadow-lg">
+              {inWatchParty ? `Siddhant O. & ${partyMembers} others` : "Siddhant O."}
             </span>
-          </div>
         </div>
-        {/* recommended for today */}
-        <div className=" absolute inset-0 flex items-start z-20 bg-[url('/ott.png')] bg-cover bg-center">
-          <div className="ml-6 mt-60">
-            <Button className="backdrop-filter backdrop-blur-sm bg-gray-900/30 hover:bg-white text-white hover:text-black px-6 py-2 rounded">
-              Learn More
-            </Button>
-          </div>
+
+        {/* Slides */}
+        <div className="w-full h-full relative">
+          {bannerData.map((banner, index) => (
+            <div
+              key={index}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${index === currentSlide ? 'opacity-100' : 'opacity-0'}`}
+            >
+              <div 
+                  className="absolute inset-0 bg-cover bg-center"
+                  style={{ backgroundImage: `url(${banner.image})`}}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10" />
+              <div className="relative z-20 flex flex-col justify-end h-full p-6 md:p-12">
+                  <h1 className="text-4xl md:text-5xl font-bold mb-4 drop-shadow-lg">{banner.title}</h1>
+                  <Button className="backdrop-filter backdrop-blur-sm bg-white/20 hover:bg-white text-white hover:text-black px-8 py-3 rounded-lg w-fit transition-colors">
+                      {banner.buttonText}
+                  </Button>
+              </div>
+            </div>
+          ))}
         </div>
         
-        {/* Navigation dots */}
-        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
-          <div className="w-3 h-3 bg-white rounded-full"></div>
-          <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-          <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
-          <div className="w-3 h-3 bg-gray-400 rounded-full"></div>
+        {/* Slider Dots */}
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex space-x-3 z-20">
+            {bannerData.map((_, index) => (
+                <button 
+                    key={index}
+                    onClick={() => setCurrentSlide(index)}
+                    className={`w-3 h-3 rounded-full transition-colors duration-300 ${index === currentSlide ? 'bg-white' : 'bg-white/50'}`} 
+                />
+            ))}
         </div>
       </div>
-
       {/* Horizontal Navigation Bar */}
       {/* Nav Bar */}
-      <nav className="bg-gray-800 px-6 py-3">
+      <nav className="backdrop-filter backdrop-blur-sm bg-gray-900/30 px-6 py-3">
         <div className="flex items-center justify-between">
           <div className="flex space-x-6">
             {navItems.map((item, idx) => (
@@ -130,20 +159,17 @@ const Home = () => {
                 key={idx}
                 onClick={item.onClick}
                 className={
-                  `flex items-center p-2 rounded-lg transition-colors duration-200 ease-in-out group ${
+                  `flex flex-col items-center p-2 rounded-lg transition-colors duration-200 ease-in-out group ${
                     item.active ? 'bg-white text-black' : 'text-gray-400 hover:bg-gray-700 hover:text-white'
                   }`
                 }
               >
                 <item.icon className="w-6 h-6 transition-transform duration-200 group-hover:scale-110" />
-                <span className="text-sm font-bold opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                <span className="text-xs font-bold mt-1 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                   {item.name}
                 </span>
               </button>
             ))}
-          </div>
-          <div className="text-sm text-gray-400">
-            Friday, June 6, 3:30pm
           </div>
         </div>
       </nav>
@@ -156,12 +182,12 @@ const Home = () => {
             <button
               key={index}
               onClick={() => handlePlatformClick(platform.url)}
-              className={`${platform.bgColor} rounded-lg p-4 min-w-[120px] h-16 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform`}
+              className={`${platform.bgColor} rounded-lg flex-1 h-16 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform min-w-0`}
             >
-              <span className="font-bold text-white text-sm">{platform.name}</span>
+              <span className="font-bold text-white text-sm text-center px-2 truncate">{platform.name}</span>
             </button>
           ))}
-          <button className="bg-gray-700 border-2 border-dashed border-gray-500 rounded-lg p-4 min-w-[120px] h-16 flex items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors">
+          <button className="bg-gray-700 border-2 border-dashed border-gray-500 rounded-lg flex-1 h-16 flex items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors min-w-0">
             <Plus className="w-6 h-6 text-gray-400" />
           </button>
         </div>
@@ -177,17 +203,16 @@ const Home = () => {
       {/* Recommended Content */}
       <div className="px-6 pb-8">
         <h2 className="text-xl font-semibold mb-4">Recommended for You</h2>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
           {recommendedMovies.map((movie, index) => (
             <div key={index} className="group cursor-pointer">
-              <div className="aspect-video bg-gray-800 rounded-lg overflow-hidden mb-2 group-hover:scale-105 transition-transform">
+              <div className="aspect-video bg-gray-800 rounded overflow-hidden transition-transform transform group-hover:scale-110 border-2 border-transparent group-hover:border-white">
                 <img 
                   src={movie.image} 
                   alt={movie.title}
                   className="w-full h-full object-cover"
                 />
               </div>
-              <p className="text-sm text-gray-300 text-center font-bold">{movie.title}</p>
             </div>
           ))}
         </div>
