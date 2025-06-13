@@ -171,25 +171,84 @@ const Home = () => {
               </button>
             ))}
           </div>
-          <div className="flex items-center space-x-2">
-          <button className="bg-white py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-stone-950 duration-200 relative">
-            <img src="https://logos-world.net/wp-content/uploads/2020/04/Netflix-Logo.png" alt="icon"  className="absolute inset-0 m-auto w-20 h-10" />
-          </button>
-          <button className="bg-sky-500 py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative">
-            <img src="/primevideo.svg" alt="icon"  className="absolute inset-0 m-auto w-20 h-10" />
-          </button>
-          <button className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative">
-            <img src="/liv.png" alt="icon"  className="absolute inset-0 m-auto w-19 h-9" />
-          </button>
-          <button className="bg-white py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="icon"  className="absolute inset-0 m-auto w-20 h-10" />
-          </button>
-          <button className="bg-stone-300 py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative">
-            <img src="https://logos-world.net/wp-content/uploads/2021/11/ZEE5-Logo.png" alt="icon"  className="absolute inset-0 m-auto w-20 h-10" />
-          </button>
-          <button className="bg-sky-100 py-7 px-12 rounded-lg hover:scale-125 border-2 hover:border-slate-900 duration-200 relative">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/MX_Player_logo.svg" alt="icon"  className="absolute inset-0 m-auto w-20 h-10" />
-          </button>
+        <div className="flex items-center space-x-2">
+          <a
+            href="https://www.netflix.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-stone-950 duration-200 relative"
+          >
+            <img
+              src="https://logos-world.net/wp-content/uploads/2020/04/Netflix-Logo.png"
+              alt="Netflix"
+              className="absolute inset-0 m-auto w-20 h-10"
+            />
+          </a>
+
+          <a
+            href="https://www.primevideo.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-sky-500 py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative"
+          >
+            <img
+              src="/primevideo.svg"
+              alt="Prime Video"
+              className="absolute inset-0 m-auto w-20 h-10"
+            />
+          </a>
+
+          <a
+            href="https://www.jiohotstar.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative"
+          >
+            <img
+              src="/liv.png"
+              alt="Liv"
+              className="absolute inset-0 m-auto w-19 h-9"
+            />
+          </a>
+
+          <a
+            href="https://www.youtube.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-white py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"
+              alt="YouTube"
+              className="absolute inset-0 m-auto w-20 h-10"
+            />
+          </a>
+
+          <a
+            href="https://www.zee5.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-stone-300 py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative"
+          >
+            <img
+              src="https://logos-world.net/wp-content/uploads/2021/11/ZEE5-Logo.png"
+              alt="ZEE5"
+              className="absolute inset-0 m-auto w-20 h-10"
+            />
+          </a>
+
+          <a
+            href="https://www.mxplayer.in"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-sky-100 py-7 px-12 rounded-lg hover:scale-125 border-2 hover:border-slate-900 duration-200 relative"
+          >
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/5/5c/MX_Player_logo.svg"
+              alt="MX Player"
+              className="absolute inset-0 m-auto w-20 h-10"
+            />
+          </a>
         </div>
 
         </div>
