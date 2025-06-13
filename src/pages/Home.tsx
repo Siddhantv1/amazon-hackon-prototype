@@ -61,15 +61,15 @@ const Home = () => {
     }
   }, []);
 
-  const ottPlatforms = [
-    { name: 'Netflix', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Netflix-Logo.png', url: 'https://netflix.com', bgColor: 'bg-red-600' },
-    { name: 'Prime Video', logo: 'https://m.media-amazon.com/images/G/01/digital/video/web/Logo-min.png', url: 'https://primevideo.com', bgColor: 'bg-[#146EB4]' },
-    { name: 'YouTube', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg', url: 'https://youtube.com', bgColor: 'bg-red-600' },
-    { name: 'Zee5', logo: 'https://akamaividz2.zee5.com/image/upload/w_1013,h_405,c_scale,f_webp,q_auto:eco/resources/0-1-manual_65395a801a6a4b4a850b9094aebccf23/list/1170x4051668082074884zee5logoforweb.png', url: 'https://zee5.com', bgColor: 'bg-black' },
-    { name: 'JioHotstar', logo: 'https://img10.hotstar.com/image/upload/f_auto,q_90,w_256/v1661346101/web-images/logo-d-plus.svg', url: 'https://hotstar.com', bgColor: 'bg-yellow-500' },
-    { name: 'Sony Liv', logo: 'https://images.ottplay.com/images/sony-liv-1662019009.png', url: 'https://sonyliv.com', bgColor: 'bg-blue-900' },
-    { name: 'MX Player', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5c/MX_Player_logo.svg', url: 'https://mxplayer.in', bgColor: 'bg-orange-600' }
-  ];
+  // const ottPlatforms = [
+  //   { name: 'Netflix', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Netflix-Logo.png', url: 'https://netflix.com', bgColor: 'bg-red-600' },
+  //   { name: 'Prime Video', logo: 'https://m.media-amazon.com/images/G/01/digital/video/web/Logo-min.png', url: 'https://primevideo.com', bgColor: 'bg-[#146EB4]' },
+  //   { name: 'YouTube', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg', url: 'https://youtube.com', bgColor: 'bg-red-600' },
+  //   { name: 'Zee5', logo: 'https://akamaividz2.zee5.com/image/upload/w_1013,h_405,c_scale,f_webp,q_auto:eco/resources/0-1-manual_65395a801a6a4b4a850b9094aebccf23/list/1170x4051668082074884zee5logoforweb.png', url: 'https://zee5.com', bgColor: 'bg-black' },
+  //   { name: 'JioHotstar', logo: 'https://img10.hotstar.com/image/upload/f_auto,q_90,w_256/v1661346101/web-images/logo-d-plus.svg', url: 'https://hotstar.com', bgColor: 'bg-yellow-500' },
+  //   { name: 'Sony Liv', logo: 'https://images.ottplay.com/images/sony-liv-1662019009.png', url: 'https://sonyliv.com', bgColor: 'bg-blue-900' },
+  //   { name: 'MX Player', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5c/MX_Player_logo.svg', url: 'https://mxplayer.in', bgColor: 'bg-orange-600' }
+  // ];
 
   const handlePlatformClick = (url: string) => {
     window.open(url, '_blank', 'noopener,noreferrer');
@@ -171,30 +171,52 @@ const Home = () => {
               </button>
             ))}
           </div>
+          <div className="flex items-center space-x-2">
+          <button className="bg-white py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-stone-950 duration-200 relative">
+            <img src="https://logos-world.net/wp-content/uploads/2020/04/Netflix-Logo.png" alt="icon"  className="absolute inset-0 m-auto w-20 h-10" />
+          </button>
+          <button className="bg-sky-500 py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative">
+            <img src="/primevideo.svg" alt="icon"  className="absolute inset-0 m-auto w-20 h-10" />
+          </button>
+          <button className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative">
+            <img src="/liv.png" alt="icon"  className="absolute inset-0 m-auto w-19 h-9" />
+          </button>
+          <button className="bg-white py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="icon"  className="absolute inset-0 m-auto w-20 h-10" />
+          </button>
+          <button className="bg-stone-300 py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative">
+            <img src="https://logos-world.net/wp-content/uploads/2021/11/ZEE5-Logo.png" alt="icon"  className="absolute inset-0 m-auto w-20 h-10" />
+          </button>
+          <button className="bg-sky-100 py-7 px-12 rounded-lg hover:scale-125 border-2 hover:border-slate-900 duration-200 relative">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/MX_Player_logo.svg" alt="icon"  className="absolute inset-0 m-auto w-20 h-10" />
+          </button>
+        </div>
+
         </div>
       </nav>
 
 
-      {/* OTT Platforms */}
-      <div className="px-6 py-6">
+      
+      {/* <div className="px-0 py-0">
         <div className="flex items-center space-x-4 overflow-x-auto pb-4">
           {ottPlatforms.map((platform, index) => (
             <button
               key={index}
               onClick={() => handlePlatformClick(platform.url)}
-              className={`${platform.bgColor} rounded-lg flex-1 h-16 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform min-w-0`}
+              className={`${platform.bgColor} rounded-lg flex-1 h-10 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform min-w-0`}
             >
-              <span className="font-bold text-white text-sm text-center px-2 truncate">{platform.name}</span>
+              <span className="font-bold text-white text-sm text-center px-2 truncate">{platform.logo}</span>
             </button>
           ))}
           <button className="bg-gray-700 border-2 border-dashed border-gray-500 rounded-lg flex-1 h-16 flex items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors min-w-0">
             <Plus className="w-6 h-6 text-gray-400" />
           </button>
         </div>
-      </div>
+      </div> */}
 
-      {/* Surprise Me Button */}
-      <div className="px-6 mb-4">
+      {/* Surprise Button with recommendation title*/}
+      <div className="px-6 py-2 mb-4 flex items-center justify-between">
+        <h2 className="text-xl font-semibold">Recommended for You</h2>
         <Button variant="outline" className="border-gray-600 text-black hover:text-white hover:bg-gray-700">
           Surprise Me
         </Button>
@@ -202,7 +224,6 @@ const Home = () => {
 
       {/* Recommended Content */}
       <div className="px-6 pb-8">
-        <h2 className="text-xl font-semibold mb-4">Recommended for You</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
           {recommendedMovies.map((movie, index) => (
             <div key={index} className="group cursor-pointer">
