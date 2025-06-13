@@ -100,16 +100,16 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
+    <div className="min-h-screen bg-neutral-900 text-white">
       {/* Audio Input Component */}
       <AudioInput visible={audioInputVisible} />
       
       {/* --- MODIFIED: Featured Content Banner is now a Custom Slider --- */}
-      <div className="relative h-[60vh] bg-gray-800 overflow-hidden">
+      <div className="relative h-[80vh] bg-stone-800 overflow-hidden">
         {/* User Info */}
         <div className="absolute top-6 left-6 z-30 flex items-center space-x-2 text-white">
             <div className="w-8 h-8 bg-[#146EB4] rounded-full flex items-center justify-center">
-              <span className="text-white font-bold text-sm">JM</span>
+              <span className="text-white font-bold text-sm">SO</span>
             </div>
             <span className="font-medium drop-shadow-lg">
               {inWatchParty ? `Siddhant O. & ${partyMembers} others` : "Siddhant O."}
@@ -144,7 +144,7 @@ const Home = () => {
                 <button 
                     key={index}
                     onClick={() => setCurrentSlide(index)}
-                    className={`w-3 h-3 rounded-full transition-colors duration-300 ${index === currentSlide ? 'bg-white' : 'bg-white/50'}`} 
+                    className={`w-2 h-2 rounded-full transition-colors duration-300 ${index === currentSlide ? 'bg-white' : 'bg-white/50'}`} 
                 />
             ))}
         </div>
@@ -153,7 +153,7 @@ const Home = () => {
       {/* Nav Bar */}
       <nav className="backdrop-filter backdrop-blur-sm bg-gray-900/30 px-6 py-3">
         <div className="flex items-center justify-between">
-          <div className="flex space-x-6">
+          <div className="flex space-x-1">
             {navItems.map((item, idx) => (
               <button
                 key={idx}
