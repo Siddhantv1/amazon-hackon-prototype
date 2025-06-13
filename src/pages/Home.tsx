@@ -104,7 +104,7 @@ const Home = () => {
       {/* Audio Input Component */}
       <AudioInput visible={audioInputVisible} />
       
-      {/* --- MODIFIED: Featured Content Banner is now a Custom Slider --- */}
+      {/* --- Custom slider for banners --- */}
       <div className="relative h-[80vh] bg-stone-800 overflow-hidden">
         {/* User Info */}
         <div className="absolute top-6 left-6 z-30 flex items-center space-x-2 text-white">
@@ -194,25 +194,6 @@ const Home = () => {
 
         </div>
       </nav>
-
-
-      
-      {/* <div className="px-0 py-0">
-        <div className="flex items-center space-x-4 overflow-x-auto pb-4">
-          {ottPlatforms.map((platform, index) => (
-            <button
-              key={index}
-              onClick={() => handlePlatformClick(platform.url)}
-              className={`${platform.bgColor} rounded-lg flex-1 h-10 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform min-w-0`}
-            >
-              <span className="font-bold text-white text-sm text-center px-2 truncate">{platform.logo}</span>
-            </button>
-          ))}
-          <button className="bg-gray-700 border-2 border-dashed border-gray-500 rounded-lg flex-1 h-16 flex items-center justify-center cursor-pointer hover:bg-gray-600 transition-colors min-w-0">
-            <Plus className="w-6 h-6 text-gray-400" />
-          </button>
-        </div>
-      </div> */}
 
       {/* Surprise Button with recommendation title*/}
       <div className="px-6 py-2 mb-4 flex items-center justify-between">
