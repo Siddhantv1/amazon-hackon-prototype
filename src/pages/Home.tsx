@@ -97,6 +97,12 @@ const Home = () => {
     { title: "28 Days Later", image: "https://img.englishcinemakyiv.com/yjN9fvEs8f6SN5-l8gp6i8F9Y7xnPSacq9ZT-R6QQ90/resize:fill:800:450:1:0/gravity:sm/aHR0cHM6Ly9leHBhdGNpbmVtYXByb2QuYmxvYi5jb3JlLndpbmRvd3MubmV0L2ltYWdlcy83ODE5NjgzYS0xODdiLTQ3MTQtODNhZC03ZGQ2YmQyZjIzZWMuanBn.jpg" },
     { title: "The Big Bang Theory", image: "https://m.media-amazon.com/images/S/pv-target-images/7b982e06d08c1909f755785795fadde07545fc829a1525f27981c7fa5e1be5b3.jpg"},
     { title: "Madgaon Express", image: "https://static.toiimg.com/photo/108237610.cms"},
+    { title: "Bladerunner 2049", image: "https://c4.wallpaperflare.com/wallpaper/604/994/452/blade-runner-2049-science-fiction-cyberpunk-ryan-gosling-wallpaper-preview.jpg"},
+    { title: "Ford v Ferrari", image: "https://i0.wp.com/www.iconvsicon.com/wp-content/uploads/2019/06/Ford_v_Ferrari_OneSheet-featured.jpg?fit=800%2C488&ssl=1"},
+    { title: "Logan", image: "https://static1.moviewebimages.com/wordpress/wp-content/uploads/article/sDUsoW8GxAcQeW8nPX4m6KTPrlXm4d.jpg"},
+    { title: "Solo Leveling", image: "https://www.gamegrin.com/assets/game/solo-levelingarise/_resampled/SetWidth800-solo-levelingarise-background.jpg"},
+    { title: "The Boys", image: "https://4kwallpapers.com/images/wallpapers/the-boys-season-4-2880x1800-17287.jpg"},
+    { title: "Parasite", image: "https://mckeestory.com/wp-content/uploads/2020/02/parasite-feb-18-2020.jpg"},
   ];
 
   return (
