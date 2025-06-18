@@ -208,7 +208,7 @@ const Home = () => {
             href="https://www.jiohotstar.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-7 px-12 rounded-lg hover:scale-125 border-2 border-transparent hover:border-white duration-200 relative"
+            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-7 px-12 rounded-lg hover:scale-125 border-2 border-stone-700 hover:border-white duration-200 relative"
           >
             <img
               src="/liv.png"
@@ -240,6 +240,19 @@ const Home = () => {
               src="https://logos-world.net/wp-content/uploads/2021/11/ZEE5-Logo.png"
               alt="ZEE5"
               className="absolute inset-0 m-auto w-20 h-10"
+            />
+          </a>
+
+          <a
+            href="https://www.sonyliv.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gradient-to-r from-blue-900 from-0% via-black via-60% to-purple-800 to-100% py-7 px-12 rounded-lg hover:scale-125 border-2 border-stone-900 hover:border-white duration-200 relative"
+          >
+            <img
+              src="/sony.png"
+              alt="Liv"
+              className="absolute inset-0 m-auto w-19 h-9"
             />
           </a>
 
