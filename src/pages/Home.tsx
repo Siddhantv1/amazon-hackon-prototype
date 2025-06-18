@@ -208,7 +208,7 @@ const Home = () => {
             href="https://www.jiohotstar.com"
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-7 px-12 rounded-lg hover:scale-125 border-2 border-stone-700 hover:border-white duration-200 relative"
+            className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-7 px-12 rounded-lg hover:scale-125 border-2 border-stone-900 hover:border-white duration-200 relative"
           >
             <img
               src="/liv.png"

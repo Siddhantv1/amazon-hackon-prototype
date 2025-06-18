@@ -19,7 +19,7 @@ const WatchParty = () => {
   const [partyCreated, setPartyCreated] = useState(false);
   const [generatedCode, setGeneratedCode] = useState('');
   const [members, setMembers] = useState<Member[]>([
-    { id: 1, name: 'James M. (You)', status: 'Host', isLeader: true },
+    { id: 1, name: 'Siddhant O. (You)', status: 'Host', isLeader: true },
   ]);
   const [pendingMembers, setPendingMembers] = useState([
     { id: 2, name: 'Sarah K.', status: 'Pending' },
