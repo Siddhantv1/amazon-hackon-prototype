@@ -1,9 +1,33 @@
-
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Search, Home as HomeIcon, Tv, Bookmark, Settings, Sofa, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AudioInput from "@/components/AudioInput";
+
+// --- Interface for a Movie from TMDb ---
+interface TVResult {
+  id: number;
+  name: string;
+  backdrop_path: string;
+  vote_average: number;
+  media_type: 'tv';
+}
+
+interface MovieResult {
+  id: number;
+  title: string;
+  backdrop_path: string;
+  vote_average: number;
+  media_type: 'movie';
+}
+
+interface FinalMediaItem {
+  id: number;
+  title: string;
+  backdrop_path: string;
+  logo_path: string | null;
+  media_type: 'movie' | 'tv';
+}
 
 const Home = () => {
   const navigate = useNavigate();
@@ -11,7 +35,78 @@ const Home = () => {
   const [inWatchParty, setInWatchParty] = useState(false);
   const [partyMembers, setPartyMembers] = useState(3);
   const [currentSlide, setCurrentSlide] = useState(0);
-  
+
+  // --for storing movie data fetched from the API ---
+  const [recommendedMovies, setRecommendedMovies] = useState<FinalMediaItem[]>([]);
+
+  // --- Effect to fetch movies -
+ useEffect(() => {
+  const fetchMoviesAndTV = async () => {
+    const API_KEY = 'API_KEY';
+    const BASE_URL = 'https://api.themoviedb.org/3';
+
+    try {
+      const page = Math.floor(Math.random() * 20) + 1;
+
+      // Fetch M
+      const movieRes = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&vote_count.gte=500&with_original_language=hi|ta|te|ml|en|ja&certification_country=IN&certification.lte=UA&page=${page}`);
+
+      if (!movieRes.ok) throw new Error('Failed to fetch movies from TMDb.');
+      const movieData = await movieRes.json();
+
+      const movieResults: MovieResult[] = movieData.results.map((item: any) => ({
+        id: item.id,
+        title: item.title,
+        backdrop_path: item.backdrop_path,
+        vote_average: item.vote_average,
+        media_type: 'movie'
+      }));
+
+      // Fetch TV Shows
+      const tvRes = await fetch(`${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&vote_count.gte=500&with_original_language=hi|ta|te|ml|en|ja&page=${page}`);
+      if (!tvRes.ok) throw new Error('Failed to fetch TV shows from TMDb.');
+      const tvData = await tvRes.json();
+
+      const tvResults: TVResult[] = tvData.results.map((item: any) => ({
+        id: item.id,
+        name: item.name,
+        backdrop_path: item.backdrop_path,
+        vote_average: item.vote_average,
+        media_type: 'tv'
+      }));
+
+      const combinedData = [...movieResults, ...tvResults];
+
+      const combinedResults: FinalMediaItem[] = await Promise.all(
+        combinedData
+          .filter(item => item.backdrop_path && item.vote_average > 6)
+          .slice(0, 18)
+          .map(async (item) => {
+            const endpoint = item.media_type === 'tv' ? 'tv' : 'movie';
+            const logoRes = await fetch(`${BASE_URL}/${endpoint}/${item.id}/images?api_key=${API_KEY}&include_image_language=en,null`);
+            const logoData = await logoRes.json();
+            const logo = logoData.logos?.find((l: { iso_639_1: string | null }) => l.iso_639_1 === 'en') ||
+                         logoData.logos?.find((l: { iso_639_1: string | null }) => l.iso_639_1 === null);
+
+            return {
+              id: item.id,
+              title: 'title' in item ? item.title : item.name,
+              backdrop_path: item.backdrop_path,
+              logo_path: logo ? `https://image.tmdb.org/t/p/original${logo.file_path}` : null,
+              media_type: item.media_type
+            };
+          })
+      );
+
+      setRecommendedMovies(combinedResults);
+    } catch (error) {
+      console.error("Error fetching TMDb data:", error);
+    }
+  };
+
+  fetchMoviesAndTV();
+}, []);
+
   // Effect for handling key press events
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -34,8 +129,9 @@ const Home = () => {
       window.removeEventListener('keyup', handleKeyUp);
     };
   }, []);
+
   const bannerData = [
-    { image: "https://images.unsplash.com/photo-1574375927938-d5a98e8ffe85?q=80&w=2070&auto=format&fit=crop", title: "Explore platforms", buttonText: "Learn More" },
+    { image: "https://www.filmfad.com/wp-content/uploads/2015/03/Secret-Life-of-Walter-Mitty.jpg", title: "Explore platforms", buttonText: "Learn More" },
     { image: "https://m.media-amazon.com/images/S/pv-target-images/53e30470b1f7c88cfd4c9176cddcb156e9f152469edd71336f0c57c0839d2c7c.jpg", title: "Until Dawn", buttonText: "Watch Now" },
     { image: "https://ntvb.tmsimg.com/assets/p28215037_v_h8_ab.jpg?w=1280&h=720", title: "A Minecraft Movie", buttonText: "Watch Now" },
     { image: "https://static.mygov.in/static/s3fs-public/mygov_172101958351307401.jpg", title: "Live Sports Action", buttonText: "Go Live" },
@@ -61,20 +157,6 @@ const Home = () => {
     }
   }, []);
 
-  // const ottPlatforms = [
-  //   { name: 'Netflix', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Netflix-Logo.png', url: 'https://netflix.com', bgColor: 'bg-red-600' },
-  //   { name: 'Prime Video', logo: 'https://m.media-amazon.com/images/G/01/digital/video/web/Logo-min.png', url: 'https://primevideo.com', bgColor: 'bg-[#146EB4]' },
-  //   { name: 'YouTube', logo: 'https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg', url: 'https://youtube.com', bgColor: 'bg-red-600' },
-  //   { name: 'Zee5', logo: 'https://akamaividz2.zee5.com/image/upload/w_1013,h_405,c_scale,f_webp,q_auto:eco/resources/0-1-manual_65395a801a6a4b4a850b9094aebccf23/list/1170x4051668082074884zee5logoforweb.png', url: 'https://zee5.com', bgColor: 'bg-black' },
-  //   { name: 'JioHotstar', logo: 'https://img10.hotstar.com/image/upload/f_auto,q_90,w_256/v1661346101/web-images/logo-d-plus.svg', url: 'https://hotstar.com', bgColor: 'bg-yellow-500' },
-  //   { name: 'Sony Liv', logo: 'https://images.ottplay.com/images/sony-liv-1662019009.png', url: 'https://sonyliv.com', bgColor: 'bg-blue-900' },
-  //   { name: 'MX Player', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/5c/MX_Player_logo.svg', url: 'https://mxplayer.in', bgColor: 'bg-orange-600' }
-  // ];
-
-  const handlePlatformClick = (url: string) => {
-    window.open(url, '_blank', 'noopener,noreferrer');
-  };
-
   const navItems = [
     { name: 'Home', icon: HomeIcon, active: true },
     { name: 'Search', icon: Search },
@@ -84,30 +166,8 @@ const Home = () => {
     { name: 'Settings', icon: Settings }
   ];
 
-  const recommendedMovies = [
-    { title: "The Accountant 2", image: "https://assetscdn1.paytm.com/images/cinema/The-Accountant-2-118f8700-ede4-11ef-bc88-6d3374531046.jpg" },
-    { title: "The Dark Knight Rises", image: "https://i.pinimg.com/originals/e6/b4/2f/e6b42f7280b1522dfa7ba5344ade696b.jpg" },
-    { title: "Peaky Blinders", image: "https://miro.medium.com/v2/resize:fit:820/1*EsNbEC8u5QeWqMqa8Hk-Ew.png" },
-    { title: "Panchayat", image: "https://feeds.abplive.com/onecms/images/uploaded-images/2024/05/16/3cc6265c0949ec8d0792087bb48eb5fa1715847610947274_original.jpeg?impolicy=abp_cdn&imwidth=640" },
-    { title: "Reacher", image: "https://devdiscourse.blob.core.windows.net/devnews/10_08_2023_09_53_10_4031052.jpg" },
-    { title: "Criminal Justice", image: "https://i.ytimg.com/vi/98pKCUl4ljM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLD5SnLDeU-j0xix5PPDFpXV_DcWyg" },
-    { title: "Live: ICCT20 IND v PAK", image: "https://assets-in.bmscdn.com/discovery-catalog/events/et00400032-edznwvluwe-landscape.jpg"},
-    { title: "Invincible", image: "https://4kwallpapers.com/images/wallpapers/invincible-poster-2560x1440-20135.png"},
-    { title: "Top Gun: Maverick", image: "https://flixchatter.net/wp-content/uploads/2022/05/topgun2-poster.jpg?w=640"},
-    { title: "28 Days Later", image: "https://img.englishcinemakyiv.com/yjN9fvEs8f6SN5-l8gp6i8F9Y7xnPSacq9ZT-R6QQ90/resize:fill:800:450:1:0/gravity:sm/aHR0cHM6Ly9leHBhdGNpbmVtYXByb2QuYmxvYi5jb3JlLndpbmRvd3MubmV0L2ltYWdlcy83ODE5NjgzYS0xODdiLTQ3MTQtODNhZC03ZGQ2YmQyZjIzZWMuanBn.jpg" },
-    { title: "The Big Bang Theory", image: "https://m.media-amazon.com/images/S/pv-target-images/7b982e06d08c1909f755785795fadde07545fc829a1525f27981c7fa5e1be5b3.jpg"},
-    { title: "Madgaon Express", image: "https://static.toiimg.com/photo/108237610.cms"},
-    { title: "Bladerunner 2049", image: "https://c4.wallpaperflare.com/wallpaper/604/994/452/blade-runner-2049-science-fiction-cyberpunk-ryan-gosling-wallpaper-preview.jpg"},
-    { title: "Ford v Ferrari", image: "https://i0.wp.com/www.iconvsicon.com/wp-content/uploads/2019/06/Ford_v_Ferrari_OneSheet-featured.jpg?fit=800%2C488&ssl=1"},
-    { title: "Logan", image: "https://static1.moviewebimages.com/wordpress/wp-content/uploads/article/sDUsoW8GxAcQeW8nPX4m6KTPrlXm4d.jpg"},
-    { title: "Solo Leveling", image: "https://www.gamegrin.com/assets/game/solo-levelingarise/_resampled/SetWidth800-solo-levelingarise-background.jpg"},
-    { title: "The Boys", image: "https://4kwallpapers.com/images/wallpapers/the-boys-season-4-2880x1800-17287.jpg"},
-    { title: "Parasite", image: "https://mckeestory.com/wp-content/uploads/2020/02/parasite-feb-18-2020.jpg"},
-  ];
-
   return (
     <div className="min-h-screen bg-neutral-900 text-white">
-      {/* Audio Input Component */}
       <AudioInput visible={audioInputVisible} />
       
       {/* --- Custom slider for banners --- */}
@@ -284,14 +344,25 @@ const Home = () => {
       {/* Recommended Content */}
       <div className="px-6 pb-8">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
-          {recommendedMovies.map((movie, index) => (
-            <div key={index} className="group cursor-pointer">
-              <div className="aspect-video bg-gray-800 rounded overflow-hidden transition-transform transform group-hover:scale-110 border-2 border-transparent group-hover:border-white">
+          {recommendedMovies.map((movie) => (
+            <div key={movie.id} className="group cursor-pointer" title={movie.title}>
+              <div className="aspect-video bg-gray-800 rounded overflow-hidden transition-transform transform group-hover:scale-110 border-2 border-transparent group-hover:border-white relative">
                 <img 
-                  src={movie.image} 
+                  src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`} 
                   alt={movie.title}
                   className="w-full h-full object-cover"
                 />
+                {movie.logo_path ? (
+                  <img 
+                    src={movie.logo_path} 
+                    alt={movie.title}
+                    className="absolute bottom-2 left-2 max-w-[80%] max-h-[40%] object-contain drop-shadow-md"
+                  />
+                ) : (
+                  <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white font-bold text-center p-2">
+                    {movie.title}
+                  </div>
+                )}
               </div>
             </div>
           ))}
