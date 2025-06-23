@@ -3,23 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Search, Home as HomeIcon, Tv, Bookmark, Settings, Sofa, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AudioInput from "@/components/AudioInput";
-
-// --- Interface for a Movie from TMDb ---
-interface TVResult {
-  id: number;
-  name: string;
-  backdrop_path: string;
-  vote_average: number;
-  media_type: 'tv';
-}
-
-interface MovieResult {
-  id: number;
-  title: string;
-  backdrop_path: string;
-  vote_average: number;
-  media_type: 'movie';
-}
+import ContentModal from '@/components/ContentModal';
 
 interface FinalMediaItem {
   id: number;
@@ -35,77 +19,41 @@ const Home = () => {
   const [inWatchParty, setInWatchParty] = useState(false);
   const [partyMembers, setPartyMembers] = useState(3);
   const [currentSlide, setCurrentSlide] = useState(0);
-
-  // --for storing movie data fetched from the API ---
+  const [selectedItem, setSelectedItem] = useState<{ id: number; media_type: 'movie' | 'tv' } | null>(null);
   const [recommendedMovies, setRecommendedMovies] = useState<FinalMediaItem[]>([]);
 
-  // --- Effect to fetch movies -
- useEffect(() => {
-  const fetchMoviesAndTV = async () => {
-    const API_KEY = 'API_KEY';
-    const BASE_URL = 'https://api.themoviedb.org/3';
+  // --- Effect to fetch movies from the backend ---
+  useEffect(() => {
+    const fetchMoviesAndTV = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/api/recommendations');
 
-    try {
-      const page = Math.floor(Math.random() * 20) + 1;
+        if (!response.ok) {
+          // log error status
+          console.error(`An error occurred: ${response.status}`);
+          // Throw an error to be caught by the catch block.
+          throw new Error('Failed to fetch from backend.');
+        }
 
-      // Fetch M
-      const movieRes = await fetch(`${BASE_URL}/discover/movie?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&vote_count.gte=500&with_original_language=hi|ta|te|ml|en|ja&certification_country=IN&certification.lte=UA&page=${page}`);
+        const data = await response.json();
+        
+        //this was unnecessary but ok(cheking if array was fetched)
+        if (Array.isArray(data)) {
+            setRecommendedMovies(data);
+        } else {
+            console.error("Received data is not an array:", data);
+            setRecommendedMovies([]); // prevent crash
+        }
 
-      if (!movieRes.ok) throw new Error('Failed to fetch movies from TMDb.');
-      const movieData = await movieRes.json();
+      } catch (error) {
+        console.error('Error fetching recommendations:', error);
+        //set empty array incase network error
+        setRecommendedMovies([]);
+      }
+    };
 
-      const movieResults: MovieResult[] = movieData.results.map((item: any) => ({
-        id: item.id,
-        title: item.title,
-        backdrop_path: item.backdrop_path,
-        vote_average: item.vote_average,
-        media_type: 'movie'
-      }));
-
-      // Fetch TV Shows
-      const tvRes = await fetch(`${BASE_URL}/discover/tv?api_key=${API_KEY}&language=en-US&sort_by=popularity.desc&include_adult=false&vote_count.gte=500&with_original_language=hi|ta|te|ml|en|ja&page=${page}`);
-      if (!tvRes.ok) throw new Error('Failed to fetch TV shows from TMDb.');
-      const tvData = await tvRes.json();
-
-      const tvResults: TVResult[] = tvData.results.map((item: any) => ({
-        id: item.id,
-        name: item.name,
-        backdrop_path: item.backdrop_path,
-        vote_average: item.vote_average,
-        media_type: 'tv'
-      }));
-
-      const combinedData = [...movieResults, ...tvResults];
-
-      const combinedResults: FinalMediaItem[] = await Promise.all(
-        combinedData
-          .filter(item => item.backdrop_path && item.vote_average > 6)
-          .slice(0, 18)
-          .map(async (item) => {
-            const endpoint = item.media_type === 'tv' ? 'tv' : 'movie';
-            const logoRes = await fetch(`${BASE_URL}/${endpoint}/${item.id}/images?api_key=${API_KEY}&include_image_language=en,null`);
-            const logoData = await logoRes.json();
-            const logo = logoData.logos?.find((l: { iso_639_1: string | null }) => l.iso_639_1 === 'en') ||
-                         logoData.logos?.find((l: { iso_639_1: string | null }) => l.iso_639_1 === null);
-
-            return {
-              id: item.id,
-              title: 'title' in item ? item.title : item.name,
-              backdrop_path: item.backdrop_path,
-              logo_path: logo ? `https://image.tmdb.org/t/p/original${logo.file_path}` : null,
-              media_type: item.media_type
-            };
-          })
-      );
-
-      setRecommendedMovies(combinedResults);
-    } catch (error) {
-      console.error("Error fetching TMDb data:", error);
-    }
-  };
-
-  fetchMoviesAndTV();
-}, []);
+    fetchMoviesAndTV();
+  }, []);
 
   // Effect for handling key press events
   useEffect(() => {
@@ -336,7 +284,15 @@ const Home = () => {
       {/* Surprise Button with recommendation title*/}
       <div className="px-6 py-2 mb-4 flex items-center justify-between">
         <h2 className="text-xl font-semibold">Recommended for You</h2>
-        <Button variant="outline" className="border-gray-600 text-black hover:text-white hover:bg-gray-700">
+        <Button
+          variant="outline"
+          className="border-gray-600 text-black hover:text-white hover:bg-gray-700"
+          onClick={() => {
+            if (recommendedMovies.length > 0) {
+              const random = recommendedMovies[Math.floor(Math.random() * recommendedMovies.length)];
+              setSelectedItem({ id: random.id, media_type: random.media_type });
+            }
+          }}>
           Surprise Me
         </Button>
       </div>
@@ -345,7 +301,7 @@ const Home = () => {
       <div className="px-6 pb-8">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
           {recommendedMovies.map((movie) => (
-            <div key={movie.id} className="group cursor-pointer" title={movie.title}>
+            <div key={movie.id} className="group cursor-pointer" title={movie.title} onClick={() => setSelectedItem({ id: movie.id, media_type: movie.media_type })}>
               <div className="aspect-video bg-gray-800 rounded overflow-hidden transition-transform transform group-hover:scale-110 border-2 border-transparent group-hover:border-white relative">
                 <img 
                   src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`} 
@@ -368,6 +324,14 @@ const Home = () => {
           ))}
         </div>
       </div>
+          {selectedItem && (
+      <ContentModal
+        id={selectedItem.id}
+        mediaType={selectedItem.media_type}
+        onClose={() => setSelectedItem(null)}
+      />
+    )}
+
     </div>
   );
 };
