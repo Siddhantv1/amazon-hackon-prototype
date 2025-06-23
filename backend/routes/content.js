@@ -1,5 +1,3 @@
-// routes/content.js
-
 import express from 'express';
 import tmdb from '../utils/tmdbClient.js';
 
@@ -9,8 +7,6 @@ router.get('/:media_type/:id', async (req, res) => {
   const { media_type, id } = req.params;
 
   try {
-    // ⭐ OPTIMIZATION: No need to pass api_key, the client handles it.
-    // All three requests are fired concurrently for maximum speed.
     const [detailsRes, videosRes, providersRes] = await Promise.all([
       tmdb.get(`/${media_type}/${id}`, { params: { language: 'en-US' } }),
       tmdb.get(`/${media_type}/${id}/videos`, { params: { language: 'en-US' } }),
