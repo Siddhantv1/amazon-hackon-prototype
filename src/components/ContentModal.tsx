@@ -208,7 +208,7 @@ const ContentModal: React.FC<ContentModalProps> = ({ id, mediaType, onClose }) =
           <X size={20} />
         </button>
         
-        <div className="overflow-y-auto">
+        <div className="overflow-y-auto custom-scrollbar">
           {renderContent()}
         </div>
       </div>
