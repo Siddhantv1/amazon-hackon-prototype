@@ -9,7 +9,6 @@ const LoadingComponent = () => {
         <div className="words">
           <span className="word">movies</span>
           <span className="word">shows</span>
-          <span className="word">series</span>
           <span className="word">anime</span>
           <span className="word">for you</span>
           <span className="word">movies</span>
