@@ -19,6 +19,11 @@ npm i
 # start dev server
 npm run dev
 ```
+## Key features
+1. Get Refreshed recommendations based on your groove, whether its movies, TV shows, or Live content.
+2. Create or Join a Lounge to sync-watch with friends, chat using voice. (proof of concept)
+3. Watch trailers, explore streaming options, and more.
+
 
 ## What technologies are used for this project?
 
