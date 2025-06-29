@@ -107,7 +107,7 @@
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
-  background-color: #1f1f1f; /* Darker track background */
+  background-color: #1f1f1f; 
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
