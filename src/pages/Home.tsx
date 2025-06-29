@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Search, Home as HomeIcon, Tv, Bookmark, Settings, Sofa, Plus, RefreshCw } from "lucide-react";
+import { Search, Home as HomeIcon, Tv, Bookmark, Settings, Sofa, RefreshCw } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AudioInput from "@/components/AudioInput";
 import ContentModal from '@/components/ContentModal';
@@ -286,7 +286,17 @@ const Home = () => {
 
       {/* Surprise Button with recommendation title*/}
       <div className="px-6 py-2 mb-4 flex items-center justify-between">
-        <h2 className="text-xl font-semibold">Recommended for You</h2>
+        <div className='flex items-center gap-5'>
+        <h2 className="text-xl font-semibold justify-left">Recommended for You
+        </h2>
+        <button
+          onClick={() => window.location.reload()}
+          className="p-2 rounded-full bg-gray-800 hover:bg-purple-600 transition-all duration-300 shadow-md hover:shadow-purple-500/40 hover:rotate-90"
+          title="Refresh Recommendations"
+        >
+          <RefreshCw size={20} className="text-white transition-transform duration-300" />
+        </button>
+        </div>
         <Button
           variant="outline"
           className="border-gray-600 text-black hover:text-white hover:bg-gray-700"
