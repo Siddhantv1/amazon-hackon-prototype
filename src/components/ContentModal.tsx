@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { X, Film, AlertTriangle } from 'lucide-react';
+import React, { useEffect, useState, useCallback } from 'react';
+import { X, Film, AlertTriangle, RefreshCw } from 'lucide-react';
 
 // TYPE DEFINITIONS
 interface ContentModalProps {
@@ -66,37 +66,32 @@ const ContentModal: React.FC<ContentModalProps> = ({ id, mediaType, onClose }) =
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // DATA FETCHING EFFECT
-  useEffect(() => {
-    // for cleaning up fetches if the component unmounts
-    const abortController = new AbortController();
+  const loadContent = useCallback(async (abortController: AbortController) => {
+    setLoading(true);
+    setError(null);
+    setContent(null);
 
-    const loadContent = async () => {
-      // Reset state for new content
-      setLoading(true);
-      setError(null);
-      setContent(null);
-
-      try {
-        const data = await fetchContentDetails(mediaType, id, abortController.signal);
-        setContent(data);
-      } catch (err: any) {
-        if (err.name !== 'AbortError') {
-          console.error('Error fetching content details:', err);
-          setError(err.message || 'An unknown error occurred.');
-        }
-      } finally {
-        setLoading(false);
+    try {
+      const data = await fetchContentDetails(mediaType, id, abortController.signal);
+      setContent(data);
+    } catch (err: any) {
+      if (err.name !== 'AbortError') {
+        console.error('Error fetching content details:', err);
+        setError(err.message || 'An unknown error occurred.');
       }
-    };
+    } finally {
+      setLoading(false);
+    }
+  }, [id, mediaType]);
 
-    loadContent();
+  useEffect(() => {
+    const abortController = new AbortController();
+    loadContent(abortController);
 
-    // Cleanup function to abort the fetch on unmount
     return () => {
       abortController.abort();
     };
-  }, [id, mediaType]);
+  }, [loadContent]);
 
 
   // close component using Escape key
@@ -123,7 +118,13 @@ const ContentModal: React.FC<ContentModalProps> = ({ id, mediaType, onClose }) =
         <div className="flex flex-col items-center justify-center h-full text-center p-8">
           <AlertTriangle className="w-16 h-16 text-red-500 mb-4" />
           <h3 className="text-xl font-semibold text-white mb-2">Could Not Load Content</h3>
-          <p className="text-neutral-400">{error}</p>
+          <p className="text-neutral-400 mb-4">{error}</p>
+          <button
+            onClick={() => loadContent(new AbortController())}
+            className="text-white bg-gray-700 hover:bg-gray-600 transition-colors rounded-full p-2"
+          >
+            <RefreshCw size={20} />
+          </button>
         </div>
       );
     }
