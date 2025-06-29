@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
-import { Search, Home as HomeIcon, Tv, Bookmark, Settings, Sofa, Plus } from "lucide-react";
+import { Search, Home as HomeIcon, Tv, Bookmark, Settings, Sofa, Plus, RefreshCw } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import AudioInput from "@/components/AudioInput";
 import ContentModal from '@/components/ContentModal';
+import LoadingComponent from '@/components/ui/loading';
 
 interface FinalMediaItem {
   id: number;
@@ -21,37 +22,39 @@ const Home = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [selectedItem, setSelectedItem] = useState<{ id: number; media_type: 'movie' | 'tv' } | null>(null);
   const [recommendedMovies, setRecommendedMovies] = useState<FinalMediaItem[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // --- Effect to fetch movies from the backend ---
-  useEffect(() => {
-    const fetchMoviesAndTV = async () => {
-      try {
-        const response = await fetch('http://localhost:5000/api/recommendations');
+  const fetchMoviesAndTV = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('http://localhost:5000/api/recommendations');
 
-        if (!response.ok) {
-          // log error status
-          console.error(`An error occurred: ${response.status}`);
-          // Throw an error to be caught by the catch block.
-          throw new Error('Failed to fetch from backend.');
-        }
-
-        const data = await response.json();
-        
-        //this was unnecessary but ok(cheking if array was fetched)
-        if (Array.isArray(data)) {
-            setRecommendedMovies(data);
-        } else {
-            console.error("Received data is not an array:", data);
-            setRecommendedMovies([]); // prevent crash
-        }
-
-      } catch (error) {
-        console.error('Error fetching recommendations:', error);
-        //set empty array incase network error
-        setRecommendedMovies([]);
+      if (!response.ok) {
+        console.error(`An error occurred: ${response.status}`);
+        throw new Error('Failed to fetch from backend.');
       }
-    };
 
+      const data = await response.json();
+      
+      if (Array.isArray(data)) {
+          setRecommendedMovies(data);
+      } else {
+          console.error("Received data is not an array:", data);
+          setRecommendedMovies([]);
+      }
+
+    } catch (error: any) {
+      console.error('Error fetching recommendations:', error);
+      setError(error.message || 'An unknown error occurred.');
+      setRecommendedMovies([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
     fetchMoviesAndTV();
   }, []);
 
@@ -299,30 +302,48 @@ const Home = () => {
 
       {/* Recommended Content */}
       <div className="px-6 pb-8">
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
-          {recommendedMovies.map((movie) => (
-            <div key={movie.id} className="group cursor-pointer" title={movie.title} onClick={() => setSelectedItem({ id: movie.id, media_type: movie.media_type })}>
-              <div className="aspect-video bg-gray-800 rounded overflow-hidden transition-transform transform group-hover:scale-110 border-2 border-transparent group-hover:border-white relative">
-                <img 
-                  src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`} 
-                  alt={movie.title}
-                  className="w-full h-full object-cover"
-                />
-                {movie.logo_path ? (
+        {loading ? (
+          <div className="flex justify-center items-center h-40">
+            <LoadingComponent />
+          </div>
+        ) : error ? (
+          <div className="flex flex-col items-center justify-center h-40 text-center">
+            <p className="text-gray-500 mb-4">{error}</p>
+            <Button
+              variant="outline"
+              className="border-gray-600 text-black hover:bg-gray-700 hover:text-white hover:bg-purple-600"
+              onClick={() => window.location.reload()}
+            >
+              <RefreshCw className="mr-2 h-4 w-4" />
+              Retry
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+            {recommendedMovies.map((movie) => (
+              <div key={movie.id} className="group cursor-pointer" title={movie.title} onClick={() => setSelectedItem({ id: movie.id, media_type: movie.media_type })}>
+                <div className="aspect-video bg-gray-800 rounded overflow-hidden transition-transform transform group-hover:scale-110 border-2 border-transparent group-hover:border-white relative">
                   <img 
-                    src={movie.logo_path} 
+                    src={`https://image.tmdb.org/t/p/w780${movie.backdrop_path}`} 
                     alt={movie.title}
-                    className="absolute bottom-2 left-2 max-w-[80%] max-h-[40%] object-contain drop-shadow-md"
+                    className="w-full h-full object-cover"
                   />
-                ) : (
-                  <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white font-bold text-center p-2">
-                    {movie.title}
-                  </div>
-                )}
+                  {movie.logo_path ? (
+                    <img 
+                      src={movie.logo_path} 
+                      alt={movie.title}
+                      className="absolute bottom-2 left-2 max-w-[80%] max-h-[40%] object-contain drop-shadow-md"
+                    />
+                  ) : (
+                    <div className="absolute inset-0 bg-black/70 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center text-white font-bold text-center p-2">
+                      {movie.title}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        )}
       </div>
           {selectedItem && (
       <ContentModal
