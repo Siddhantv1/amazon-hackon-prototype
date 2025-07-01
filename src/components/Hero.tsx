@@ -12,13 +12,14 @@ const Hero = () => {
           <br />
           <span className="text-[#FF9900]">Entertainment</span>
         </h1>
+        <div className="font-lato">
         <p className="text-xl md:text-3xl text-gray-300 mb-8 max-w-2xl mx-auto">
           Watch movies and shows that you'd love.
         </p>
         <div className="flex justify-center">
           <Button
             size="lg"
-            className="bg-[#FF9900] hover:bg-[#FF9900]/80 text-black px-8 py-4 text-lg"
+            className="bg-[#FF9900] hover:bg-[#FF9900]/80 text-black font-bold px-8 py-4 text-lg"
             onClick={() => navigate('/login')}
           >
             Start Watching
@@ -26,6 +27,7 @@ const Hero = () => {
         </div>
         <div className="mt-8 text-gray-400">
           <p>Buy once, stream forever.</p>
+        </div>
         </div>
       </div>
     </div>

@@ -59,10 +59,10 @@ const Index = () => {
       <section className="min-h-screen flex items-center justify-center px-6 z-10 relative snap-start">
         <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="text-left">
-            <h2 className="text-4xl md:text-7xl font-bold text-white mb-6 leading-tight">
+            <h2 className="text-4xl md:text-7xl font-bold font-lato text-white mb-6 leading-tight">
               TV that gets you
             </h2>
-            <p className="text-lg text-gray-300 leading-relaxed">
+            <p className="text-lg text-gray-300 font-lato leading-relaxed">
               By serving up the best recommendations from all your apps in one place,
               Fire TV makes it easier than ever to find what to watch.
             </p>
@@ -76,6 +76,7 @@ const Index = () => {
           </div>
         </div>
       </section>
+      <div className="px-full py-full"></div>
 
       {/* Section 3 */}
       <section className="min-h-screen flex items-center justify-center px-6 z-10 relative snap-start">
@@ -88,10 +89,10 @@ const Index = () => {
             />
           </div>
           <div className="text-left order-1 lg:order-2">
-            <h2 className="text-4xl md:text-7xl font-bold text-white mb-6 leading-tight">
+            <h2 className="text-4xl md:text-7xl font-bold font-lato text-white mb-6 leading-tight">
               Stream your heart out
             </h2>
-            <p className="text-lg text-gray-300 leading-relaxed">
+            <p className="text-lg text-gray-300 font-lato leading-relaxed">
               Over 1.5 million movies and TV episodes. Watch favorites from Netflix, Prime Video, JioHotstar, YouTube, SonyLIV, Zee5, and more.
             </p>
           </div>
@@ -101,19 +102,19 @@ const Index = () => {
       {/* Section 4 */}
       <section className="min-h-screen flex flex-col items-center justify-center px-6 z-10 relative snap-start">
         <div className="max-w-6xl mx-auto text-center mb-auto pt-20">
-          <h1 className="text-6xl md:text-6xl font-bold text-white mb-12 leading-tight">
+          <h1 className="text-6xl md:text-6xl font-bold font-lato text-white mb-12 leading-tight">
             Maximize your<br />
             Fire TV experience
           </h1>
           <Button
             onClick={() => navigate('/login')}
-            className="bg-[#FF9900] hover:bg-[#fdd835] text-black font-semibold px-6 py-3 text-lg mt-4"
+            className="bg-[#FF9900] hover:bg-[#fdd835] font-lato text-black font-semibold px-6 py-3 text-lg mt-4"
           >
             Get Started
           </Button>
         </div>
         <div className="w-full max-w-7xl mx-auto mt-auto pb-8">
-          <div className="border border-gray-600 rounded-lg p-6 flex justify-between items-center bg-black/30 backdrop-blur-sm">
+          <div className="border border-gray-600 font-lato rounded-lg p-6 flex justify-between items-center bg-black/30 backdrop-blur-sm">
             <span className="justify-center text-gray-400 text-sm">© Amazon Fire TV Stick. All rights reserved.</span>
           </div>
         </div>
