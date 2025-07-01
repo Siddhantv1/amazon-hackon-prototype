@@ -1,5 +1,6 @@
 
 import type { Config } from "tailwindcss";
+import defaultTheme from 'tailwindcss/defaultTheme';
 
 export default {
 	darkMode: ["class"],
@@ -21,6 +22,7 @@ export default {
 		extend: {
 			fontFamily: {
 				'bebas': ['"Bebas Neue"', 'cursive'],
+				'lato': ['Lato', ...defaultTheme.fontFamily.sans],
 			},
 			colors: {
 				'amazon-orange': '#FF9900',
