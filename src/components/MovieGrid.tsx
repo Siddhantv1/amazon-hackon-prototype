@@ -28,7 +28,7 @@ const MovieGrid = () => {
   // We use React.useMemo to create and shuffle the columns only once.
   // This prevents the order from changing on every component re-render.
   const columns = React.useMemo(() => {
-    const numColumns = 7;
+    const numColumns = 8;
     
     // Function to create a single column with a unique random order
     const createColumn = () => {
