@@ -3,6 +3,7 @@ import express from 'express';
 import cors from 'cors';
 import recommendationsRouter from './routes/recommendations.js';
 import contentRouter from './routes/content.js';
+import searchRouter from './routes/search.js';
 
 const app = express();
 
@@ -13,6 +14,6 @@ app.use(cors({
 
 app.use('/api/recommendations', recommendationsRouter);
 app.use('/api/content', contentRouter);
-
+app.use('/api/search', searchRouter);
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
