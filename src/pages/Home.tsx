@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import AudioInput from "@/components/AudioInput";
 import ContentModal from '@/components/ContentModal';
 import LoadingComponent from '@/components/ui/loading';
+import SearchBox from "@/components/SearchBox";
 
 interface FinalMediaItem {
   id: number;
@@ -24,6 +25,7 @@ const Home = () => {
   const [recommendedMovies, setRecommendedMovies] = useState<FinalMediaItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showSearch, setShowSearch] = useState(false);
 
   const fetchMoviesAndTV = async () => {
     setLoading(true);
@@ -110,7 +112,7 @@ const Home = () => {
 
   const navItems = [
     { name: 'Home', icon: HomeIcon, active: true },
-    { name: 'Search', icon: Search },
+    { name: 'Search', icon: Search, onClick: () => setShowSearch(true) },
     { name: 'Live TV', icon: Tv },
     { name: 'Saved', icon: Bookmark },
     { name: 'Lounge', icon: Sofa, onClick: () => navigate('/watch-party') },
@@ -362,7 +364,15 @@ const Home = () => {
         onClose={() => setSelectedItem(null)}
       />
     )}
-
+        {showSearch && (
+      <SearchBox
+        onClose={() => setShowSearch(false)}
+        onSelect={(item) => {
+          setShowSearch(false);
+          setSelectedItem(item); // will open ContentModal
+        }}
+      />
+    )}
     </div>
   );
 };
