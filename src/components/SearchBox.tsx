@@ -120,9 +120,7 @@ function useSearch(query: string) {
 
 // --- UI COMPONENTS ---
 
-/**
- * A skeleton loader component to show while search results are loading.
- */
+// A skeleton loader component
 const SkeletonLoader: React.FC = () => (
   <div className="flex items-center p-3 space-x-4 animate-pulse">
     <div className="w-12 h-16 bg-neutral-700 rounded-md"></div>
@@ -133,9 +131,7 @@ const SkeletonLoader: React.FC = () => (
   </div>
 );
 
-/**
- * Renders a single search result item with a poster, title, and year.
- */
+//Renders a single search result item with a poster, title, and year.
 const ResultItem: React.FC<ResultItemProps> = ({ item, onSelect }) => {
   const title = item.title || item.name;
   const year = item.release_date?.substring(0, 4) || item.first_air_date?.substring(0, 4);
