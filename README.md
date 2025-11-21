@@ -6,6 +6,9 @@
 Develop a personalized content recommendation engine for Fire TV that considers mood, past behavior and time of day. Create Innovative socal features for shared viewing experiences. Focus on AI-driven content recommendation and social watching across OTT platforms.
 
 ## Getting Started
+
+**1. Open a terminal (Powershell, Git Bash, etc.)**
+
 ```sh
 # Step 1: Clone the repository.
 git clone https://github.com/siddhantv1/amazon-hackon-prototype.git
@@ -18,6 +21,16 @@ npm i
 
 # start dev server
 npm run dev
+```
+
+**2. Open another terminal in the root directory**
+```sh
+# navigate to backend
+cd backend
+
+# start server
+node server
+
 ```
 ## Key features
 1. Get Refreshed recommendations based on your groove, whether its movies, TV shows, or Live content.
